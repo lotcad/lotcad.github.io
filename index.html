@@ -61,6 +61,25 @@
       </div>
     </section>
 
+    <section id="screenshots">
+      <h2>LotCAD in Action</h2>
+      <p class="muted">Actual captures from the hex spacer and flange coupling demos.</p>
+      <div class="grid screenshot-grid">
+        <figure class="screenshot-card">
+          <a href="images/spacer-model.png"><img src="images/spacer-model.png" alt="Hex spacer with a threaded shaft and central hole in the LotCAD viewport" width="1600" height="1000" loading="lazy"></a>
+          <figcaption><h3>3D part modeling</h3><p>A hex spacer built with extrusion, a tapped-hole cut and an external thread.</p></figcaption>
+        </figure>
+        <figure class="screenshot-card">
+          <a href="images/spacer-drawing.png"><img src="images/spacer-drawing.png" alt="Projected spacer drawing views with a hatched A-A section" width="1600" height="1000" loading="lazy"></a>
+          <figcaption><h3>Drawing views and sections</h3><p>Top, front, right and isometric views, with an A-A section showing the internal hole.</p></figcaption>
+        </figure>
+        <figure class="screenshot-card">
+          <a href="images/flange-exploded.png"><img src="images/flange-exploded.png" alt="Exploded flange coupling assembly with shafts, bolts, washers and nuts" width="1600" height="1000" loading="lazy"></a>
+          <figcaption><h3>Assembly exploration</h3><p>A 38-part flange coupling shown midway through its exploded-view sequence.</p></figcaption>
+        </figure>
+      </div>
+    </section>
+
     <section id="formats">
       <h2>Supported File Formats</h2>
       <p class="muted">Choose a native project for editing, a mesh format for exchange, or a drawing format for documentation. Linked examples are available to open or download; other filenames illustrate each format's use.</p>
@@ -71,7 +90,7 @@
             <tr><th scope="col">Extension</th><th scope="col">Operation</th><th scope="col">Purpose</th><th scope="col">Example</th></tr>
           </thead>
           <tbody>
-            <tr><th scope="row">.lot</th><td>Open · Save</td><td>Native LotCAD project for objects, layers and editable modeling definitions.</td><td>hex_spacer.lot — save your modeling project</td></tr>
+            <tr><th scope="row">.lot</th><td>Open · Save</td><td>Native LotCAD project for objects, layers and editable modeling definitions.</td><td><a href="examples/hex_spacer_3d.lot" download>hex_spacer_3d.lot — editable spacer project</a></td></tr>
             <tr><th scope="row">.obj</th><td>Import · Export</td><td>Wavefront geometry for sharing meshes and curves.</td><td><a href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sdk/models/cube.obj">cube.obj — cube mesh</a></td></tr>
             <tr><th scope="row">.stl</th><td>Import · Export</td><td>Triangle mesh geometry for 3D printing and mesh exchange.</td><td><a href="examples/cube.stl" download>cube.stl — 10 mm cube</a></td></tr>
             <tr><th scope="row">.dxf</th><td>Import · Export</td><td>2D drawing exchange for supported lines, circles, arcs, polylines and text.</td><td><a href="examples/square-circle.dxf" download>square-circle.dxf — square and circle</a></td></tr>
@@ -80,7 +99,7 @@
             <tr><th scope="row">.ply</th><td>Import</td><td>Point-cloud data, including point colors when present.</td><td>scan.ply — point-cloud example</td></tr>
             <tr><th scope="row">.nrrd / .nhdr</th><td>Import</td><td>Volume data for extracting a surface mesh.</td><td>volume.nrrd — volume dataset</td></tr>
             <tr><th scope="row">.nii / .nii.gz</th><td>Import</td><td>NIfTI volume data for extracting a surface mesh.</td><td>volume.nii.gz — compressed volume dataset</td></tr>
-            <tr><th scope="row">.pdf / .png</th><td>Drawing export</td><td>Drawing views, dimensions, text and linework for documents and images.</td><td>drawing.pdf / drawing.png — drawing output</td></tr>
+            <tr><th scope="row">.pdf / .png</th><td>Drawing export</td><td>Drawing views, dimensions, text and linework for documents and images.</td><td><a href="examples/spacer-drawing.pdf" download>spacer-drawing.pdf — part drawing</a><br><a href="examples/spacer-drawing.png" download>spacer-drawing.png — drawing image</a></td></tr>
           </tbody>
         </table>
       </div>

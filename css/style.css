@@ -152,3 +152,9 @@ td { color: var(--muted); }
 td a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
 nav { flex-wrap: wrap; justify-content: center; }
 a:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
+
+.screenshot-card { margin: 0; overflow: hidden; background: var(--panel); border: 1px solid #2a3643; border-radius: 14px; }
+.screenshot-card img { display: block; width: 100%; height: auto; }
+.screenshot-card figcaption { padding: 20px; }
+.screenshot-card h3 { margin-top: 0; }
+.screenshot-card p { color: var(--muted); margin-bottom: 0; }
