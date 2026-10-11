@@ -121,7 +121,7 @@ h2 { font-size: 30px; margin-bottom: 12px; }
   gap: 10px;
   margin-top: 24px;
 }
-.platforms span {
+.platforms a {
   background: var(--panel);
   border: 1px solid #304052;
   padding: 9px 16px;
@@ -167,3 +167,6 @@ a:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
 @media (max-width: 700px) {
   .screenshot-grid { grid-template-columns: 1fr; }
 }
+
+.platforms a:hover { border-color: var(--green); color: var(--green); }
+#download .button[id] { scroll-margin-top: 24px; }
