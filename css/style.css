@@ -139,3 +139,16 @@ footer {
   .grid { grid-template-columns: 1fr; }
   .hero { padding: 75px 20px; }
 }
+
+.text-link { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
+.card .text-link { display: block; margin-top: 10px; }
+.format-table { margin-top: 28px; overflow-x: auto; border: 1px solid #2a3643; border-radius: 14px; background: var(--panel); }
+table { width: 100%; border-collapse: collapse; min-width: 680px; text-align: left; }
+caption { padding: 16px 20px; text-align: left; color: var(--muted); }
+th, td { padding: 16px 20px; vertical-align: top; border-top: 1px solid #2a3643; }
+thead th { color: var(--green); }
+tbody th { white-space: nowrap; }
+td { color: var(--muted); }
+td a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
+nav { flex-wrap: wrap; justify-content: center; }
+a:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }

@@ -17,6 +17,8 @@
     </a>
     <nav>
       <a href="#features">Features</a>
+      <a href="#formats">Formats</a>
+      <a href="#examples">Examples</a>
       <a href="#platforms">Platforms</a>
       <a href="#download">Download</a>
       <a href="https://github.com/lotcad">GitHub</a>
@@ -39,6 +41,94 @@
         </a>
       </div>
     </div>
+
+    <section id="about">
+      <h2>What is LotCAD?</h2>
+      <p class="muted">LotCAD combines 2D drafting, 3D modeling and Vulkan visualization in a cross-platform CAD application. Its C API also lets developers bring the engine into their own desktop and mobile apps.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Model and edit</h3>
+          <p>Create sketches, boxes, cylinders and extruded profiles. Edit supported feature dimensions, add pockets and through-cuts, and keep changes in a native LotCAD project.</p>
+        </div>
+        <div class="card">
+          <h3>Draw and document</h3>
+          <p>Work with lines, arcs, text, dimensions and hatches. Create projected drawing views and sections, then export supported drawing linework to PDF or PNG.</p>
+        </div>
+        <div class="card">
+          <h3>Visualize and integrate</h3>
+          <p>Explore assemblies, imported models and robot motion. Use the SDK examples to connect rendering and CAD commands to your own application.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="formats">
+      <h2>Supported File Formats</h2>
+      <p class="muted">Choose a native project for editing, a mesh format for exchange, or a drawing format for documentation. Linked examples are available to open or download; other filenames illustrate each format's use.</p>
+      <div class="format-table">
+        <table>
+          <caption>File formats, supported operations and examples</caption>
+          <thead>
+            <tr><th scope="col">Extension</th><th scope="col">Operation</th><th scope="col">Purpose</th><th scope="col">Example</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">.lot</th><td>Open · Save</td><td>Native LotCAD project for objects, layers and editable modeling definitions.</td><td>hex_spacer.lot — save your modeling project</td></tr>
+            <tr><th scope="row">.obj</th><td>Import · Export</td><td>Wavefront geometry for sharing meshes and curves.</td><td><a href="https://github.com/kimyuheon/Vulkan_CMake_Sample/tree/main/sdk/models/cube.obj">cube.obj — cube mesh</a></td></tr>
+            <tr><th scope="row">.stl</th><td>Import · Export</td><td>Triangle mesh geometry for 3D printing and mesh exchange.</td><td><a href="examples/cube.stl" download>cube.stl — 10 mm cube</a></td></tr>
+            <tr><th scope="row">.dxf</th><td>Import · Export</td><td>2D drawing exchange for supported lines, circles, arcs, polylines and text.</td><td><a href="examples/square-circle.dxf" download>square-circle.dxf — square and circle</a></td></tr>
+            <tr><th scope="row">.gltf / .glb</th><td>Import · Export as GLB</td><td>Scene and mesh exchange. Export writes a single binary GLB file.</td><td><a href="https://github.com/kimyuheon/Vulkan_CMake_Sample/tree/main/sdk/models/BoxAnimated.glb">BoxAnimated.glb — animation example</a><br><a href="https://github.com/kimyuheon/Vulkan_CMake_Sample/tree/main/sdk/models/Duck.gltf">Duck.gltf — model with companion assets</a></td></tr>
+            <tr><th scope="row">.fbx</th><td>Import</td><td>Static polygon meshes, materials and textures.</td><td>model.fbx — static model import</td></tr>
+            <tr><th scope="row">.ply</th><td>Import</td><td>Point-cloud data, including point colors when present.</td><td>scan.ply — point-cloud example</td></tr>
+            <tr><th scope="row">.nrrd / .nhdr</th><td>Import</td><td>Volume data for extracting a surface mesh.</td><td>volume.nrrd — volume dataset</td></tr>
+            <tr><th scope="row">.nii / .nii.gz</th><td>Import</td><td>NIfTI volume data for extracting a surface mesh.</td><td>volume.nii.gz — compressed volume dataset</td></tr>
+            <tr><th scope="row">.pdf / .png</th><td>Drawing export</td><td>Drawing views, dimensions, text and linework for documents and images.</td><td>drawing.pdf / drawing.png — drawing output</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">FBX import covers static geometry. PLY import reads points. PDF and PNG drawing export includes supported 2D linework and drawing views.</p>
+      <p><a class="text-link" href="https://github.com/kimyuheon/Vulkan_CMake_Sample/tree/main/sdk/models">Browse public example models and their companion assets →</a></p>
+    </section>
+
+    <section id="examples">
+      <h2>CAD &amp; SDK Examples</h2>
+      <p class="muted">Explore practical workflows in the demo videos and build your own app with the public SDK samples.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Hex spacer</h3>
+          <p>A CAD modeling demo covering extrusion, threaded features, dimension edits, projected drawing views, a section view and PDF output.</p>
+          <a class="text-link" href="#videos">Watch CAD demos →</a>
+        </div>
+        <div class="card">
+          <h3>Flange coupling</h3>
+          <p>A 38-part assembly example for exploring component placement and an exploded view.</p>
+          <a class="text-link" href="#videos">Watch assembly demos →</a>
+        </div>
+        <div class="card">
+          <h3>Robot arm</h3>
+          <p>Load the URDF robot example and control joints, the gripper and automatic motion through shared SDK demo logic.</p>
+          <a class="text-link" href="https://github.com/kimyuheon/Vulkan_CMake_Sample/tree/main/sample/shared">Explore the robot example →</a>
+        </div>
+        <div class="card">
+          <h3>C++ and Qt / QML</h3>
+          <p>Start with direct C API calls or embed the engine in a Qt 6 desktop interface.</p>
+          <a class="text-link" href="https://github.com/kimyuheon/Vulkan_CMake_Sample/tree/main/sample/cpp_api_test">C++ example →</a>
+          <a class="text-link" href="https://github.com/kimyuheon/Vulkan_CMake_Sample/tree/main/sample/qml_test">Qt / QML example →</a>
+        </div>
+        <div class="card">
+          <h3>Windows apps</h3>
+          <p>Connect LotCAD to MFC, WPF or WinForms. C# samples use the native C API through P/Invoke.</p>
+          <a class="text-link" href="https://github.com/kimyuheon/Vulkan_CMake_Sample/tree/main/sample/mfc_dlg_test">MFC example →</a>
+          <a class="text-link" href="https://github.com/kimyuheon/Vulkan_CMake_Sample/tree/main/sample/wpf_test">WPF example →</a>
+          <a class="text-link" href="https://github.com/kimyuheon/Vulkan_CMake_Sample/tree/main/sample/winforms_test">WinForms example →</a>
+        </div>
+        <div class="card">
+          <h3>Swift and Android</h3>
+          <p>Explore macOS and iOS Swift hosts, or an Android Kotlin interface connected through JNI.</p>
+          <a class="text-link" href="https://github.com/kimyuheon/Vulkan_CMake_Sample/tree/main/sample/swift_api_test">macOS example →</a>
+          <a class="text-link" href="https://github.com/kimyuheon/Vulkan_CMake_Sample/tree/main/sample/swift_ios_test">iOS example →</a>
+          <a class="text-link" href="https://github.com/kimyuheon/Vulkan_CMake_Sample/tree/main/sample/android_test">Android example →</a>
+        </div>
+      </div>
+    </section>
 
     <section id="features">
       <h2>Engine Features</h2>
