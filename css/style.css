@@ -170,3 +170,14 @@ a:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
 
 .platforms a:hover { border-color: var(--green); color: var(--green); }
 #download .button[id] { scroll-margin-top: 24px; }
+
+header { gap: 20px; flex-wrap: wrap; }
+.language-control { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.language-control label { color: var(--muted); }
+.language-control select { font: inherit; color: var(--text); background: var(--panel); border: 1px solid #304052; border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+.language-control select:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
+#language-status:empty { display: none; }
+#language-status { color: var(--muted); max-width: 220px; }
+html { word-break: normal; overflow-wrap: break-word; }
+html:lang(ko) p { word-break: keep-all; }
+

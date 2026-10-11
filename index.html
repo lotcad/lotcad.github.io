@@ -1,11 +1,11 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="LotCAD - Cross-platform 3D CAD engine powered by Vulkan">
-  <title>LotCAD | Vulkan 3D CAD Engine</title>
+  <meta name="description" content="Vulkan 기반 크로스 플랫폼 3D CAD 엔진 LotCAD" data-i18n-content="meta.description">
+  <title data-i18n="text.0">LotCAD | Vulkan 3D CAD 엔진</title>
   <link rel="icon" type="image/png" sizes="1024x1024" href="LotCAD_1024_transparent.png">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -13,184 +13,187 @@
   <header>
     <a class="brand" href="#">
       <img src="LotCAD_1024_transparent.png" alt="" width="40" height="40">
-      <span>LotCAD</span>
+      <span><span data-i18n="text.1">LotCAD</span></span>
     </a>
     <nav>
-      <a href="#features">Features</a>
-      <a href="#formats">Formats</a>
-      <a href="#examples">Examples</a>
-      <a href="#platforms">Platforms</a>
-      <a href="#download">Download</a>
-      <a href="https://github.com/lotcad">GitHub</a>
+      <a href="#features"><span data-i18n="text.2">기능</span></a>
+      <a href="#formats"><span data-i18n="text.3">파일 형식</span></a>
+      <a href="#examples"><span data-i18n="text.4">예제</span></a>
+      <a href="#platforms"><span data-i18n="text.5">지원 플랫폼</span></a>
+      <a href="#download"><span data-i18n="text.6">다운로드</span></a>
+      <a href="https://github.com/lotcad"><span data-i18n="text.7">GitHub</span></a>
     </nav>
+    <div class="language-control">
+      <label for="language-select" data-i18n="language.label">언어</label>
+      <select id="language-select">
+        <option value="ko" lang="ko" selected>한국어</option>
+        <option value="en" lang="en">English</option>
+      </select>
+      <span id="language-status" role="status" aria-live="polite"></span>
+    </div>
   </header>
 
   <main>
     <div class="hero">
-      <div class="eyebrow">VULKAN-POWERED 3D CAD ENGINE</div>
-      <h1>Build Beyond<br>Boundaries.</h1>
-      <p>
-        LotCAD is a cross-platform 3D CAD engine built with Vulkan.
-        Explore CAD modeling, visualization, and application development.
-      </p>
+      <div class="eyebrow"><span data-i18n="text.8">VULKAN 기반 3D CAD 엔진</span></div>
+      <h1><span data-i18n="text.9">설계의 경계를</span><br><span data-i18n="text.10">넓히세요.</span></h1>
+      <p><span data-i18n="text.11">LotCAD는 Vulkan으로 만든 크로스 플랫폼 3D CAD 엔진입니다. CAD 모델링과 시각화부터 나만의 애플리케이션 개발까지 시작해 보세요.</span></p>
       <div class="buttons">
-        <a class="button" href="#download">Download LotCAD</a>
+        <a class="button" href="#download"><span data-i18n="text.12">LotCAD 다운로드</span></a>
         <a class="button secondary"
-           href="https://github.com/lotcad/Vulkan_CMake_Sample">
-          View Examples
-        </a>
+           href="https://github.com/lotcad/Vulkan_CMake_Sample"><span data-i18n="text.13">예제 보기</span></a>
       </div>
     </div>
 
     <section id="about">
-      <h2>What is LotCAD?</h2>
-      <p class="muted">LotCAD combines 2D drafting, 3D modeling and Vulkan visualization in a cross-platform CAD application. Its C API also lets developers bring the engine into their own desktop and mobile apps.</p>
+      <h2><span data-i18n="text.14">LotCAD 소개</span></h2>
+      <p class="muted"><span data-i18n="text.15">LotCAD는 2D 도면 작성, 3D 모델링, Vulkan 시각화를 하나로 제공하는 크로스 플랫폼 CAD 프로그램입니다. C API를 통해 데스크톱·모바일 앱에도 엔진을 통합할 수 있습니다.</span></p>
       <div class="grid">
         <div class="card">
-          <h3>Model and edit</h3>
-          <p>Create sketches, boxes, cylinders and extruded profiles. Edit supported feature dimensions, add pockets and through-cuts, and keep changes in a native LotCAD project.</p>
+          <h3><span data-i18n="text.16">모델링과 편집</span></h3>
+          <p><span data-i18n="text.17">스케치, 박스, 원통, 돌출 형상을 만듭니다. 지원되는 피처의 치수를 편집하고 포켓과 관통 컷을 추가한 뒤, LotCAD 프로젝트로 저장하세요.</span></p>
         </div>
         <div class="card">
-          <h3>Draw and document</h3>
-          <p>Work with lines, arcs, text, dimensions and hatches. Create projected drawing views and sections, then export supported drawing linework to PDF or PNG.</p>
+          <h3><span data-i18n="text.18">도면과 문서</span></h3>
+          <p><span data-i18n="text.19">선, 원호, 문자, 치수, 해치를 사용합니다. 투영 뷰와 단면도를 만들고 지원되는 도면 선을 PDF나 PNG로 내보내세요.</span></p>
         </div>
         <div class="card">
-          <h3>Visualize and integrate</h3>
-          <p>Explore assemblies, imported models and robot motion. Use the SDK examples to connect rendering and CAD commands to your own application.</p>
+          <h3><span data-i18n="text.20">시각화와 앱 통합</span></h3>
+          <p><span data-i18n="text.21">조립품, 가져온 모델, 로봇의 움직임을 살펴보세요. SDK 예제로 렌더링과 CAD 명령을 앱에 연결할 수 있습니다.</span></p>
         </div>
       </div>
     </section>
 
     <section id="concept">
-      <h2>From Geometry to Motion</h2>
-      <p class="muted">Model precise parts, navigate around obstacles and connect articulated assemblies.</p>
+      <h2><span data-i18n="text.22">형상에서 움직임까지</span></h2>
+      <p class="muted"><span data-i18n="text.23">정밀한 부품을 모델링하고, 장애물을 피해 이동하며, 관절로 연결된 조립품을 구성하세요.</span></p>
       <figure class="concept-art">
-        <img src="images/lotcad-concept.png" alt="Concept illustration of machined CAD parts, a navigation path around obstacles and an articulated robot arm" width="1536" height="1024" loading="lazy">
-        <figcaption>Concept illustration — CAD modeling, navigation and joint control.</figcaption>
+        <img src="images/lotcad-concept.png" alt="가공된 CAD 부품, 장애물을 돌아가는 경로, 관절 로봇 암을 담은 컨셉 일러스트" data-i18n-alt="image.concept" width="1536" height="1024" loading="lazy">
+        <figcaption><span data-i18n="text.24">컨셉 일러스트 — CAD 모델링, 내비게이션, 관절 제어</span></figcaption>
       </figure>
     </section>
 
     <section id="screenshots">
-      <h2>LotCAD in Action</h2>
-      <p class="muted">Actual captures from the hex spacer, flange coupling and navigation demos.</p>
+      <h2><span data-i18n="text.25">LotCAD 실행 화면</span></h2>
+      <p class="muted"><span data-i18n="text.26">육각 스페이서, 플랜지 커플링, 내비게이션 데모의 실제 실행 화면입니다.</span></p>
       <div class="grid screenshot-grid">
         <figure class="screenshot-card">
-          <a href="images/spacer-model.png"><img src="images/spacer-model.png" alt="Hex spacer with a threaded shaft and central hole in the LotCAD viewport" width="1600" height="1000" loading="lazy"></a>
-          <figcaption><h3>3D part modeling</h3><p>A hex spacer built with extrusion, a tapped-hole cut and an external thread.</p></figcaption>
+          <a href="images/spacer-model.png"><img src="images/spacer-model.png" alt="LotCAD 화면의 나사산 축과 중앙 구멍이 있는 육각 스페이서" data-i18n-alt="image.spacer" width="1600" height="1000" loading="lazy"></a>
+          <figcaption><h3><span data-i18n="text.27">3D 부품 모델링</span></h3><p><span data-i18n="text.28">돌출, 탭 구멍 가공, 외부 나사산으로 만든 육각 스페이서입니다.</span></p></figcaption>
         </figure>
         <figure class="screenshot-card">
-          <a href="images/spacer-drawing.png"><img src="images/spacer-drawing.png" alt="Projected spacer drawing views with a hatched A-A section" width="1600" height="1000" loading="lazy"></a>
-          <figcaption><h3>Drawing views and sections</h3><p>Top, front, right and isometric views, with an A-A section showing the internal hole.</p></figcaption>
+          <a href="images/spacer-drawing.png"><img src="images/spacer-drawing.png" alt="해치가 있는 A-A 단면과 스페이서 투영 도면 뷰" data-i18n-alt="image.drawing" width="1600" height="1000" loading="lazy"></a>
+          <figcaption><h3><span data-i18n="text.29">도면 뷰와 단면</span></h3><p><span data-i18n="text.30">평면·정면·우측·등각 뷰와 내부 구멍을 보여 주는 A-A 단면입니다.</span></p></figcaption>
         </figure>
         <figure class="screenshot-card">
-          <a href="images/flange-exploded.png"><img src="images/flange-exploded.png" alt="Exploded flange coupling assembly with shafts, bolts, washers and nuts" width="1600" height="1000" loading="lazy"></a>
-          <figcaption><h3>Assembly exploration</h3><p>A 38-part flange coupling shown midway through its exploded-view sequence.</p></figcaption>
+          <a href="images/flange-exploded.png"><img src="images/flange-exploded.png" alt="축, 볼트, 와셔, 너트로 구성된 플랜지 커플링 분해도" data-i18n-alt="image.assembly" width="1600" height="1000" loading="lazy"></a>
+          <figcaption><h3><span data-i18n="text.31">조립품 살펴보기</span></h3><p><span data-i18n="text.32">38개 부품으로 구성된 플랜지 커플링의 분해 과정입니다.</span></p></figcaption>
         </figure>
         <figure class="screenshot-card">
-          <a href="images/navigation-path.png"><img src="images/navigation-path.png" alt="LotCAD navigation viewport showing a planned path around orange obstacles" width="1600" height="1000" loading="lazy"></a>
-          <figcaption><h3>Navigation and obstacle avoidance</h3><p>A path planned around scene obstacles in the navigation test demo. Click a destination to move an agent through the scene.</p><a class="text-link" href="#navigation-demo">Watch the navigation video →</a></figcaption>
+          <a href="images/navigation-path.png"><img src="images/navigation-path.png" alt="주황색 장애물을 돌아가는 경로를 보여 주는 LotCAD 내비게이션 화면" data-i18n-alt="image.navigation" width="1600" height="1000" loading="lazy"></a>
+          <figcaption><h3><span data-i18n="text.33">내비게이션과 장애물 회피</span></h3><p><span data-i18n="text.34">내비게이션 테스트 데모에서 장애물을 돌아가는 경로를 계산한 화면입니다. 목적지를 클릭하면 에이전트가 장면 안에서 이동합니다.</span></p><a class="text-link" href="#navigation-demo"><span data-i18n="text.35">내비게이션 영상 보기 →</span></a></figcaption>
         </figure>
       </div>
     </section>
 
     <section id="formats">
-      <h2>Supported File Formats</h2>
-      <p class="muted">Choose a native project for editing, a mesh format for exchange, or a drawing format for documentation. Linked examples are available to open or download; other filenames illustrate each format's use.</p>
+      <h2><span data-i18n="text.36">지원 파일 형식</span></h2>
+      <p class="muted"><span data-i18n="text.37">편집에는 기본 프로젝트 형식을, 교환에는 메시 형식을, 문서화에는 도면 형식을 사용하세요. 링크가 있는 예제는 열거나 내려받을 수 있으며, 다른 파일명은 각 형식의 용도를 보여 주는 예시입니다.</span></p>
       <div class="format-table">
         <table>
-          <caption>File formats, supported operations and examples</caption>
+          <caption><span data-i18n="text.38">파일 형식별 지원 작업과 예제</span></caption>
           <thead>
-            <tr><th scope="col">Extension</th><th scope="col">Operation</th><th scope="col">Purpose</th><th scope="col">Example</th></tr>
+            <tr><th scope="col"><span data-i18n="text.39">확장자</span></th><th scope="col"><span data-i18n="text.40">지원 작업</span></th><th scope="col"><span data-i18n="text.41">용도</span></th><th scope="col"><span data-i18n="text.42">예제</span></th></tr>
           </thead>
           <tbody>
-            <tr><th scope="row">.lot</th><td>Open · Save</td><td>Native LotCAD project for objects, layers and editable modeling definitions.</td><td><a href="examples/hex_spacer_3d.lot" download>hex_spacer_3d.lot — editable spacer project</a></td></tr>
-            <tr><th scope="row">.obj</th><td>Import · Export</td><td>Wavefront geometry for sharing meshes and curves.</td><td><a href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sdk/models/cube.obj">cube.obj — cube mesh</a></td></tr>
-            <tr><th scope="row">.stl</th><td>Import · Export</td><td>Triangle mesh geometry for 3D printing and mesh exchange.</td><td><a href="examples/cube.stl" download>cube.stl — 10 mm cube</a></td></tr>
-            <tr><th scope="row">.dxf</th><td>Import · Export</td><td>2D drawing exchange for supported lines, circles, arcs, polylines and text.</td><td><a href="examples/square-circle.dxf" download>square-circle.dxf — square and circle</a></td></tr>
-            <tr><th scope="row">.gltf / .glb</th><td>Import · Export as GLB</td><td>Scene and mesh exchange. Export writes a single binary GLB file.</td><td><a href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sdk/models/BoxAnimated.glb">BoxAnimated.glb — animation example</a><br><a href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sdk/models/Duck.gltf">Duck.gltf — model with companion assets</a></td></tr>
-            <tr><th scope="row">.fbx</th><td>Import</td><td>Static polygon meshes, materials and textures.</td><td>model.fbx — static model import</td></tr>
-            <tr><th scope="row">.ply</th><td>Import</td><td>Point-cloud data, including point colors when present.</td><td>scan.ply — point-cloud example</td></tr>
-            <tr><th scope="row">.nrrd / .nhdr</th><td>Import</td><td>Volume data for extracting a surface mesh.</td><td>volume.nrrd — volume dataset</td></tr>
-            <tr><th scope="row">.nii / .nii.gz</th><td>Import</td><td>NIfTI volume data for extracting a surface mesh.</td><td>volume.nii.gz — compressed volume dataset</td></tr>
-            <tr><th scope="row">.pdf / .png</th><td>Drawing export</td><td>Drawing views, dimensions, text and linework for documents and images.</td><td><a href="examples/spacer-drawing.pdf" download>spacer-drawing.pdf — part drawing</a><br><a href="examples/spacer-drawing.png" download>spacer-drawing.png — drawing image</a></td></tr>
+            <tr><th scope="row"><span data-i18n="text.43">.lot</span></th><td><span data-i18n="text.44">열기 · 저장</span></td><td><span data-i18n="text.45">객체, 레이어, 편집 가능한 모델링 정의를 담는 LotCAD 기본 프로젝트입니다.</span></td><td><a href="examples/hex_spacer_3d.lot" download><span data-i18n="text.46">hex_spacer_3d.lot — 편집 가능한 스페이서 프로젝트</span></a></td></tr>
+            <tr><th scope="row"><span data-i18n="text.47">.obj</span></th><td><span data-i18n="text.48">가져오기 · 내보내기</span></td><td><span data-i18n="text.49">메시와 곡선을 공유하기 위한 Wavefront 형식입니다.</span></td><td><a href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sdk/models/cube.obj"><span data-i18n="text.50">cube.obj — 큐브 메시</span></a></td></tr>
+            <tr><th scope="row"><span data-i18n="text.51">.stl</span></th><td><span data-i18n="text.52">가져오기 · 내보내기</span></td><td><span data-i18n="text.53">3D 프린팅과 메시 교환을 위한 삼각형 메시입니다.</span></td><td><a href="examples/cube.stl" download><span data-i18n="text.54">cube.stl — 10 mm 큐브</span></a></td></tr>
+            <tr><th scope="row"><span data-i18n="text.55">.dxf</span></th><td><span data-i18n="text.56">가져오기 · 내보내기</span></td><td><span data-i18n="text.57">지원되는 선, 원, 원호, 폴리라인, 문자를 교환하는 2D 도면 형식입니다.</span></td><td><a href="examples/square-circle.dxf" download><span data-i18n="text.58">square-circle.dxf — 사각형과 원</span></a></td></tr>
+            <tr><th scope="row"><span data-i18n="text.59">.gltf / .glb</span></th><td><span data-i18n="text.60">가져오기 · GLB로 내보내기</span></td><td><span data-i18n="text.61">장면과 메시를 교환합니다. 내보내기는 하나의 바이너리 GLB 파일로 저장합니다.</span></td><td><a href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sdk/models/BoxAnimated.glb"><span data-i18n="text.62">BoxAnimated.glb — 애니메이션 예제</span></a><br><a href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sdk/models/Duck.gltf"><span data-i18n="text.63">Duck.gltf — 관련 파일이 포함된 모델</span></a></td></tr>
+            <tr><th scope="row"><span data-i18n="text.64">.fbx</span></th><td><span data-i18n="text.65">가져오기</span></td><td><span data-i18n="text.66">정적 폴리곤 메시, 재질, 텍스처를 가져옵니다.</span></td><td><span data-i18n="text.67">model.fbx — 정적 모델 가져오기</span></td></tr>
+            <tr><th scope="row"><span data-i18n="text.68">.ply</span></th><td><span data-i18n="text.69">가져오기</span></td><td><span data-i18n="text.70">포인트 클라우드를 가져오며, 점 색상 정보가 있으면 함께 읽습니다.</span></td><td><span data-i18n="text.71">scan.ply — 포인트 클라우드 예제</span></td></tr>
+            <tr><th scope="row"><span data-i18n="text.72">.nrrd / .nhdr</span></th><td><span data-i18n="text.73">가져오기</span></td><td><span data-i18n="text.74">표면 메시를 추출하기 위한 볼륨 데이터입니다.</span></td><td><span data-i18n="text.75">volume.nrrd — 볼륨 데이터</span></td></tr>
+            <tr><th scope="row"><span data-i18n="text.76">.nii / .nii.gz</span></th><td><span data-i18n="text.77">가져오기</span></td><td><span data-i18n="text.78">표면 메시를 추출하기 위한 NIfTI 볼륨 데이터입니다.</span></td><td><span data-i18n="text.79">volume.nii.gz — 압축된 볼륨 데이터</span></td></tr>
+            <tr><th scope="row"><span data-i18n="text.80">.pdf / .png</span></th><td><span data-i18n="text.81">도면 내보내기</span></td><td><span data-i18n="text.82">문서와 이미지용 도면 뷰, 치수, 문자, 선을 내보냅니다.</span></td><td><a href="examples/spacer-drawing.pdf" download><span data-i18n="text.83">spacer-drawing.pdf — 부품 도면</span></a><br><a href="examples/spacer-drawing.png" download><span data-i18n="text.84">spacer-drawing.png — 도면 이미지</span></a></td></tr>
           </tbody>
         </table>
       </div>
-      <p class="muted">FBX import covers static geometry. PLY import reads points. PDF and PNG drawing export includes supported 2D linework and drawing views.</p>
-      <p><a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sdk/models">Browse public example models and their companion assets →</a></p>
+      <p class="muted"><span data-i18n="text.85">FBX는 정적 형상을, PLY는 점 데이터를 가져옵니다. PDF·PNG 도면 내보내기는 지원되는 2D 선과 도면 뷰를 포함합니다.</span></p>
+      <p><a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sdk/models"><span data-i18n="text.86">공개 예제 모델과 관련 파일 보기 →</span></a></p>
     </section>
 
     <section id="examples">
-      <h2>CAD &amp; SDK Examples</h2>
-      <p class="muted">Explore practical workflows in the demo videos and build your own app with the public SDK samples.</p>
+      <h2><span data-i18n="text.87">CAD와 SDK 예제</span></h2>
+      <p class="muted"><span data-i18n="text.88">데모 영상에서 작업 흐름을 살펴보고 공개 SDK 예제로 나만의 앱을 만들어 보세요.</span></p>
       <div class="grid">
         <div class="card">
-          <h3>Hex spacer</h3>
-          <p>A CAD modeling demo covering extrusion, threaded features, dimension edits, projected drawing views, a section view and PDF output.</p>
-          <a class="text-link" href="#videos">Watch CAD demos →</a>
+          <h3><span data-i18n="text.89">육각 스페이서</span></h3>
+          <p><span data-i18n="text.90">돌출, 나사산 피처, 치수 편집, 투영 도면 뷰, 단면 뷰, PDF 출력을 다루는 CAD 모델링 데모입니다.</span></p>
+          <a class="text-link" href="#videos"><span data-i18n="text.91">CAD 데모 보기 →</span></a>
         </div>
         <div class="card">
-          <h3>Flange coupling</h3>
-          <p>A 38-part assembly example for exploring component placement and an exploded view.</p>
-          <a class="text-link" href="#videos">Watch assembly demos →</a>
+          <h3><span data-i18n="text.92">플랜지 커플링</span></h3>
+          <p><span data-i18n="text.93">부품 배치와 분해 뷰를 살펴보는 38개 부품의 조립품 예제입니다.</span></p>
+          <a class="text-link" href="#videos"><span data-i18n="text.94">조립품 데모 보기 →</span></a>
         </div>
         <div class="card">
-          <h3>Robot arm</h3>
-          <p>Load the URDF robot example and control joints, the gripper and automatic motion through shared SDK demo logic.</p>
-          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/shared">Explore the robot example →</a>
+          <h3><span data-i18n="text.95">로봇 암</span></h3>
+          <p><span data-i18n="text.96">URDF 로봇 예제를 불러오고 공통 SDK 데모 로직으로 관절, 그리퍼, 자동 움직임을 제어합니다.</span></p>
+          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/shared"><span data-i18n="text.97">로봇 예제 보기 →</span></a>
         </div>
         <div class="card">
-          <h3>C++ and Qt / QML</h3>
-          <p>Start with direct C API calls or embed the engine in a Qt 6 desktop interface.</p>
-          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/cpp_api_test">C++ example →</a>
-          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/qml_test">Qt / QML example →</a>
+          <h3><span data-i18n="text.98">C++와 Qt / QML</span></h3>
+          <p><span data-i18n="text.99">C API를 직접 호출하거나 Qt 6 데스크톱 인터페이스에 엔진을 넣어 보세요.</span></p>
+          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/cpp_api_test"><span data-i18n="text.100">C++ 예제 →</span></a>
+          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/qml_test"><span data-i18n="text.101">Qt / QML 예제 →</span></a>
         </div>
         <div class="card">
-          <h3>Windows apps</h3>
-          <p>Connect LotCAD to MFC, WPF or WinForms. C# samples use the native C API through P/Invoke.</p>
-          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/mfc_dlg_test">MFC example →</a>
-          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/wpf_test">WPF example →</a>
-          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/winforms_test">WinForms example →</a>
+          <h3><span data-i18n="text.102">Windows 앱</span></h3>
+          <p><span data-i18n="text.103">LotCAD를 MFC, WPF, WinForms에 연결합니다. C# 예제는 P/Invoke로 네이티브 C API를 호출합니다.</span></p>
+          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/mfc_dlg_test"><span data-i18n="text.104">MFC 예제 →</span></a>
+          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/wpf_test"><span data-i18n="text.105">WPF 예제 →</span></a>
+          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/winforms_test"><span data-i18n="text.106">WinForms 예제 →</span></a>
         </div>
         <div class="card">
-          <h3>Swift and Android</h3>
-          <p>Explore macOS and iOS Swift hosts, or an Android Kotlin interface connected through JNI.</p>
-          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/swift_api_test">macOS example →</a>
-          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/swift_ios_test">iOS example →</a>
-          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/android_test">Android example →</a>
+          <h3><span data-i18n="text.107">Swift와 Android</span></h3>
+          <p><span data-i18n="text.108">macOS·iOS Swift 앱 또는 JNI로 연결하는 Android Kotlin 인터페이스를 살펴보세요.</span></p>
+          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/swift_api_test"><span data-i18n="text.109">macOS 예제 →</span></a>
+          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/swift_ios_test"><span data-i18n="text.110">iOS 예제 →</span></a>
+          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/android_test"><span data-i18n="text.111">Android 예제 →</span></a>
         </div>
       </div>
     </section>
 
     <section id="features">
-      <h2>Engine Features</h2>
-      <p class="muted">Go beyond drafting with navigation, joint control and application integration.</p>
+      <h2><span data-i18n="text.112">엔진 기능</span></h2>
+      <p class="muted"><span data-i18n="text.113">도면 작성을 넘어 내비게이션, 관절 제어, 앱 통합으로 확장하세요.</span></p>
       <div class="grid">
         <div class="card">
-          <h3>Navigation</h3>
-          <p>Click a destination to move characters or vehicles through a scene. Plan paths around obstacles and update routes as movement progresses.</p>
-          <a class="text-link" href="#navigation-demo">See navigation in action →</a>
+          <h3><span data-i18n="text.114">내비게이션</span></h3>
+          <p><span data-i18n="text.115">목적지를 클릭하면 캐릭터나 차량이 장면 안에서 이동합니다. 장애물을 돌아가는 경로를 계산하고 이동 중에도 경로를 갱신합니다.</span></p>
+          <a class="text-link" href="#navigation-demo"><span data-i18n="text.116">내비게이션 데모 보기 →</span></a>
         </div>
         <div class="card">
-          <h3>Rigging &amp; Joint Control</h3>
-          <p>Connect scene objects in parent-child hierarchies. Define rotation or sliding joints, set axes and pivots, and control joint values through the interface or C API.</p>
-          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/shared">Explore the robot example →</a>
+          <h3><span data-i18n="text.117">리깅과 관절 제어</span></h3>
+          <p><span data-i18n="text.118">장면의 객체를 부모·자식 구조로 연결합니다. 회전·슬라이드 관절을 정의하고 축과 피벗을 설정한 뒤, 인터페이스나 C API로 관절 값을 제어합니다.</span></p>
+          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/shared"><span data-i18n="text.119">로봇 예제 보기 →</span></a>
         </div>
         <div class="card">
-          <h3>Native C API</h3>
-          <p>Embed the engine in Qt/QML, MFC, WPF, WinForms, Swift or Android hosts. Call CAD commands from C++, C# through P/Invoke, or Kotlin through JNI.</p>
-          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample">Browse SDK host samples →</a>
+          <h3><span data-i18n="text.120">네이티브 C API</span></h3>
+          <p><span data-i18n="text.121">Qt/QML, MFC, WPF, WinForms, Swift, Android 앱에 엔진을 통합합니다. C++에서 직접 호출하거나 C#의 P/Invoke, Kotlin의 JNI로 CAD 명령을 실행합니다.</span></p>
+          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample"><span data-i18n="text.122">SDK 앱 통합 예제 보기 →</span></a>
         </div>
       </div>
     </section>
 
     <section id="videos">
-      <h2>Demo Videos</h2>
-      <p class="muted">Watch LotCAD modeling and visualization demos.</p>
+      <h2><span data-i18n="text.123">데모 영상</span></h2>
+      <p class="muted"><span data-i18n="text.124">LotCAD 모델링과 시각화 데모를 확인하세요.</span></p>
       <div class="video-player">
         <iframe
           src="https://www.youtube.com/embed/videoseries?list=PLXYurQWW-c87q52FXbG5E9Gy3tjBDcRje"
-          title="LotCAD Demo Videos playlist"
+          title="LotCAD 데모 영상 재생목록" data-i18n-title="video.playlist"
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
@@ -200,16 +203,14 @@
       <div class="buttons">
         <a class="button secondary"
            href="https://youtube.com/playlist?list=PLXYurQWW-c87q52FXbG5E9Gy3tjBDcRje&amp;si=MjAcaPS1Z-c3zHdn"
-           target="_blank" rel="noopener noreferrer">
-          View Playlist on YouTube
-        </a>
+           target="_blank" rel="noopener noreferrer"><span data-i18n="text.125">YouTube 재생목록 보기</span></a>
       </div>
-      <h3 id="navigation-demo">Navigation &amp; Obstacle Avoidance</h3>
-      <p class="muted">Choose a destination and watch an agent move through the scene while avoiding obstacles.</p>
+      <h3 id="navigation-demo"><span data-i18n="text.126">내비게이션과 장애물 회피</span></h3>
+      <p class="muted"><span data-i18n="text.127">목적지를 선택하면 에이전트가 장애물을 피해 장면 안에서 이동하는 모습을 볼 수 있습니다.</span></p>
       <div class="video-player">
         <iframe
           src="https://www.youtube.com/embed/wqAdaRKzfPg"
-          title="LotCAD navigation and obstacle avoidance demo"
+          title="LotCAD 내비게이션과 장애물 회피 데모" data-i18n-title="video.navigation"
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
@@ -217,38 +218,38 @@
         </iframe>
       </div>
       <div class="buttons">
-        <a class="button secondary" href="https://youtu.be/wqAdaRKzfPg" target="_blank" rel="noopener noreferrer">Watch Navigation on YouTube</a>
+        <a class="button secondary" href="https://youtu.be/wqAdaRKzfPg" target="_blank" rel="noopener noreferrer"><span data-i18n="text.128">YouTube 내비게이션 영상 보기</span></a>
       </div>
     </section>
 
     <section id="platforms">
-      <h2>Cross-Platform</h2>
-      <p class="muted">Download the desktop application for Windows, macOS or Linux. Android and iOS links lead to SDK samples.</p>
+      <h2><span data-i18n="text.129">지원 플랫폼</span></h2>
+      <p class="muted"><span data-i18n="text.130">Windows, macOS, Linux용 데스크톱 앱을 내려받으세요. Android·iOS 링크는 SDK 예제로 연결됩니다.</span></p>
       <div class="platforms">
-        <a href="#download-windows">Windows</a>
-        <a href="#download-macos">macOS</a>
-        <a href="#download-linux">Linux</a>
-        <a href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/android_test">Android SDK</a>
-        <a href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/swift_ios_test">iOS SDK</a>
+        <a href="#download-windows"><span data-i18n="text.131">Windows</span></a>
+        <a href="#download-macos"><span data-i18n="text.132">macOS</span></a>
+        <a href="#download-linux"><span data-i18n="text.133">Linux</span></a>
+        <a href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/android_test"><span data-i18n="text.134">Android SDK</span></a>
+        <a href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/swift_ios_test"><span data-i18n="text.135">iOS SDK</span></a>
       </div>
     </section>
 
     <section id="download">
-      <h2>Download LotCAD</h2>
-      <p class="muted">LotCAD 0.1.0 Beta — desktop application downloads.</p>
+      <h2><span data-i18n="text.136">LotCAD 다운로드</span></h2>
+      <p class="muted"><span data-i18n="text.137">LotCAD 0.1.0 베타 — 데스크톱 프로그램 다운로드</span></p>
       <div class="buttons">
-        <a id="download-macos" class="button" href="https://github.com/lotcad/lotcad.github.io/releases/download/v0.1.0-beta/LotCAD-0.1.0-arm64.dmg">Download for macOS (.dmg)</a>
-        <a id="download-windows" class="button" href="https://github.com/lotcad/lotcad.github.io/releases/download/v0.1.0-beta/LotCAD-0.1.0-x64-setup.exe">Download for Windows (.exe)</a>
-        <a id="download-linux" class="button" href="https://github.com/lotcad/lotcad.github.io/releases/download/v0.1.0-beta/LotCAD-0.1.0-x86_64.AppImage">Download for Linux (.AppImage)</a>
+        <a id="download-macos" class="button" href="https://github.com/lotcad/lotcad.github.io/releases/download/v0.1.0-beta/LotCAD-0.1.0-arm64.dmg"><span data-i18n="text.138">macOS 다운로드 (.dmg)</span></a>
+        <a id="download-windows" class="button" href="https://github.com/lotcad/lotcad.github.io/releases/download/v0.1.0-beta/LotCAD-0.1.0-x64-setup.exe"><span data-i18n="text.139">Windows 다운로드 (.exe)</span></a>
+        <a id="download-linux" class="button" href="https://github.com/lotcad/lotcad.github.io/releases/download/v0.1.0-beta/LotCAD-0.1.0-x86_64.AppImage"><span data-i18n="text.140">Linux 다운로드 (.AppImage)</span></a>
       </div>
-      <p class="muted">Requirements: Apple Silicon · macOS 14+; Windows 10/11 x64; Ubuntu 24.04+ x86_64. Windows and Linux require a Vulkan GPU driver.</p>
-      <p><a class="text-link" href="https://github.com/lotcad/lotcad.github.io/releases">All files, checksums and installation instructions on Releases →</a></p>
-      <p><a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample">Developers: SDK &amp; examples →</a></p>
+      <p class="muted"><span data-i18n="text.141">요구 사항: Apple Silicon · macOS 14+; Windows 10/11 x64; Ubuntu 24.04+ x86_64. Windows와 Linux에는 Vulkan GPU 드라이버가 필요합니다.</span></p>
+      <p><a class="text-link" href="https://github.com/lotcad/lotcad.github.io/releases"><span data-i18n="text.142">모든 파일·체크섬·설치 안내는 Releases에서 →</span></a></p>
+      <p><a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample"><span data-i18n="text.143">개발자용 SDK와 예제 →</span></a></p>
     </section>
   </main>
 
-  <footer>
-    LotCAD — Cross-Platform Vulkan 3D CAD Engine
-  </footer>
+  <footer><span data-i18n="text.144">LotCAD — 크로스 플랫폼 Vulkan 3D CAD 엔진</span></footer>
+  <script src="js/i18n.js" defer></script>
 </body>
 </html>
+
