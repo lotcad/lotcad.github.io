@@ -158,3 +158,12 @@ a:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
 .screenshot-card figcaption { padding: 20px; }
 .screenshot-card h3 { margin-top: 0; }
 .screenshot-card p { color: var(--muted); margin-bottom: 0; }
+
+.concept-art { margin: 28px 0 0; overflow: hidden; border: 1px solid #2a3643; border-radius: 14px; background: var(--panel); }
+.concept-art img { display: block; width: 100%; height: auto; }
+.concept-art figcaption { padding: 14px 20px; color: var(--muted); font-size: 14px; }
+.screenshot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#navigation-demo { margin-top: 48px; }
+@media (max-width: 700px) {
+  .screenshot-grid { grid-template-columns: 1fr; }
+}

@@ -61,9 +61,18 @@
       </div>
     </section>
 
+    <section id="concept">
+      <h2>From Geometry to Motion</h2>
+      <p class="muted">Model precise parts, navigate around obstacles and connect articulated assemblies.</p>
+      <figure class="concept-art">
+        <img src="images/lotcad-concept.png" alt="Concept illustration of machined CAD parts, a navigation path around obstacles and an articulated robot arm" width="1536" height="1024" loading="lazy">
+        <figcaption>Concept illustration — CAD modeling, navigation and joint control.</figcaption>
+      </figure>
+    </section>
+
     <section id="screenshots">
       <h2>LotCAD in Action</h2>
-      <p class="muted">Actual captures from the hex spacer and flange coupling demos.</p>
+      <p class="muted">Actual captures from the hex spacer, flange coupling and navigation demos.</p>
       <div class="grid screenshot-grid">
         <figure class="screenshot-card">
           <a href="images/spacer-model.png"><img src="images/spacer-model.png" alt="Hex spacer with a threaded shaft and central hole in the LotCAD viewport" width="1600" height="1000" loading="lazy"></a>
@@ -76,6 +85,10 @@
         <figure class="screenshot-card">
           <a href="images/flange-exploded.png"><img src="images/flange-exploded.png" alt="Exploded flange coupling assembly with shafts, bolts, washers and nuts" width="1600" height="1000" loading="lazy"></a>
           <figcaption><h3>Assembly exploration</h3><p>A 38-part flange coupling shown midway through its exploded-view sequence.</p></figcaption>
+        </figure>
+        <figure class="screenshot-card">
+          <a href="images/navigation-path.png"><img src="images/navigation-path.png" alt="LotCAD navigation viewport showing a planned path around orange obstacles" width="1600" height="1000" loading="lazy"></a>
+          <figcaption><h3>Navigation and obstacle avoidance</h3><p>A path planned around scene obstacles in the navigation test demo. Click a destination to move an agent through the scene.</p><a class="text-link" href="#navigation-demo">Watch the navigation video →</a></figcaption>
         </figure>
       </div>
     </section>
@@ -165,6 +178,16 @@
           <h3>Assembly</h3>
           <p>Explore assemblies, component transformations, and animations.</p>
         </div>
+        <div class="card">
+          <h3>Navigation</h3>
+          <p>Click a destination to move characters or vehicles through a scene. Plan paths around obstacles and update routes as movement progresses.</p>
+          <a class="text-link" href="#navigation-demo">See navigation in action →</a>
+        </div>
+        <div class="card">
+          <h3>Rigging &amp; Joint Control</h3>
+          <p>Connect scene objects in parent-child hierarchies. Define rotation or sliding joints, set axes and pivots, and control joint values through the interface or C API.</p>
+          <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/shared">Explore the robot example →</a>
+        </div>
       </div>
     </section>
 
@@ -187,6 +210,21 @@
            target="_blank" rel="noopener noreferrer">
           View Playlist on YouTube
         </a>
+      </div>
+      <h3 id="navigation-demo">Navigation &amp; Obstacle Avoidance</h3>
+      <p class="muted">Choose a destination and watch an agent move through the scene while avoiding obstacles.</p>
+      <div class="video-player">
+        <iframe
+          src="https://www.youtube.com/embed/wqAdaRKzfPg"
+          title="LotCAD navigation and obstacle avoidance demo"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="buttons">
+        <a class="button secondary" href="https://youtu.be/wqAdaRKzfPg" target="_blank" rel="noopener noreferrer">Watch Navigation on YouTube</a>
       </div>
     </section>
 
