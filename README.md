@@ -67,7 +67,7 @@ Your example copies in Documents/LotCAD Examples are yours to keep or delete.
 ## Developers
 
 The engine is also available as an SDK with host samples (Qt/QML, MFC, WinForms, WPF, Swift, Android, C++):
-**[Vulkan_CMake_Sample](https://github.com/kimyuheon/Vulkan_CMake_Sample)**.
+**[Vulkan_CMake_Sample](https://github.com/lotcad/Vulkan_CMake_Sample)**.
 
 ## License notices
 
