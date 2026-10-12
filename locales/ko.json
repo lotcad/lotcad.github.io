@@ -152,6 +152,8 @@
   "image.navigation": "주황색 장애물을 돌아가는 경로를 보여 주는 LotCAD 내비게이션 화면",
   "video.playlist": "LotCAD 데모 영상 재생목록",
   "video.navigation": "LotCAD 내비게이션과 장애물 회피 데모",
-  "language.label": "언어"
+  "language.label": "언어",
+  "web.button": "웹에서 사용",
+  "web.note": "설치 없이 웹에서 실행하세요. WebGPU를 지원하는 브라우저가 필요합니다."
 }
 

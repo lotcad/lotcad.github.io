@@ -152,6 +152,8 @@
   "image.navigation": "LotCAD navigation viewport showing a planned path around orange obstacles",
   "video.playlist": "LotCAD Demo Videos playlist",
   "video.navigation": "LotCAD navigation and obstacle avoidance demo",
-  "language.label": "Language"
+  "language.label": "Language",
+  "web.button": "Use a Web",
+  "web.note": "Run in your browser without installation. A browser with WebGPU support is required."
 }
 
