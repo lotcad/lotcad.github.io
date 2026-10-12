@@ -1,9 +1,11 @@
 // DWG 모듈의 Worker 입구. 본체 (src/js/lot_files.js) 가 처음 DWG 를 열거나 저장할 때 new Worker('lot_dwg_worker.js').
 //   받는 것: { id, op: 'dwg2dxf', bytes: ArrayBuffer }  /  { id, op: 'dxf2dwg', text: string }
 //   돌려주는 것: { id, ok, bytes?: ArrayBuffer, text?: string, message }
-importScripts('lot_dwg.js');
+// 주소 꼬리 (?v=빌드 번호) 를 모듈 JS · wasm 에도 붙인다 - 새로 올리면 캐시의 옛것 대신 새것
+var version = self.location.search || '';
+importScripts('lot_dwg.js' + version);
 
-var ready = createLotDwg();
+var ready = createLotDwg({ 'locateFile': function(path) { return path + version; } });
 
 function run(M, fn, data, len) {
     var src = M._malloc(Math.max(1, len));
