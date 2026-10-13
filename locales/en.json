@@ -154,6 +154,9 @@
   "video.navigation": "LotCAD navigation and obstacle avoidance demo",
   "language.label": "Language",
   "web.button": "Use a Web",
-  "web.note": "Run in your browser without installation. A browser with WebGPU support is required."
+  "web.note": "Run in your browser without installation. A browser with WebGPU support is required.",
+  "legal.about": "About · Trademarks",
+  "legal.trademark": "AutoCAD and DWG are registered trademarks or trademarks of Autodesk, Inc. in the USA and/or other countries.",
+  "legal.not_affiliated": "LotCAD is not affiliated with, sponsored by, or endorsed by Autodesk, Inc."
 }
 

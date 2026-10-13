@@ -133,6 +133,20 @@ footer {
   border-top: 1px solid #25303b;
   color: var(--muted);
 }
+footer .legal {
+  margin: 12px auto 0;
+  max-width: 760px;
+  font-size: 12px;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+footer .legal summary {
+  cursor: pointer;
+  display: inline-block;
+}
+footer .legal p {
+  margin: 8px 0 0;
+}
 @media (max-width: 700px) {
   header { flex-direction: column; gap: 12px; }
   nav { gap: 12px; font-size: 14px; flex-wrap: wrap; justify-content: center; }
