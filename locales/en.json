@@ -14,7 +14,7 @@
   "text.12": "Download LotCAD",
   "text.13": "View Examples",
   "text.14": "What is LotCAD?",
-  "text.15": "LotCAD combines 2D drafting, 3D modeling and Vulkan visualization in a cross-platform CAD application. Its C API also lets developers bring the engine into their own desktop and mobile apps.",
+  "text.15": "LotCAD combines 2D drafting, 3D modeling, and Vulkan visualization in a cross-platform CAD application. It can integrate with a local LLM to turn 2D floor plan images into 3D models, while its C API lets developers bring the engine into desktop and mobile apps.",
   "text.16": "Model and edit",
   "text.17": "Create sketches, boxes, cylinders and extruded profiles. Edit supported feature dimensions, add pockets and through-cuts, and keep changes in a native LotCAD project.",
   "text.18": "Draw and document",
@@ -159,4 +159,3 @@
   "legal.trademark": "AutoCAD and DWG are registered trademarks or trademarks of Autodesk, Inc. in the USA and/or other countries.",
   "legal.not_affiliated": "LotCAD is not affiliated with, sponsored by, or endorsed by Autodesk, Inc."
 }
-
