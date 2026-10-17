@@ -14,7 +14,7 @@
   "text.12": "LotCAD 다운로드",
   "text.13": "예제 보기",
   "text.14": "LotCAD 소개",
-  "text.15": "LotCAD는 2D 도면 작성, 3D 모델링, Vulkan 시각화를 하나로 제공하는 크로스 플랫폼 CAD 프로그램입니다. C API를 통해 데스크톱·모바일 앱에도 엔진을 통합할 수 있습니다.",
+  "text.15": "LotCAD는 2D 도면 작성, 3D 모델링, Vulkan 시각화를 하나로 제공하는 크로스 플랫폼 CAD 프로그램입니다. 로컬 LLM과 연동해 2D 평면도 이미지를 바탕으로 3D 모델을 구현할 수 있으며, C API를 통해 데스크톱·모바일 앱에도 엔진을 통합할 수 있습니다.",
   "text.16": "모델링과 편집",
   "text.17": "스케치, 박스, 원통, 돌출 형상을 만듭니다. 지원되는 피처의 치수를 편집하고 포켓과 관통 컷을 추가한 뒤, LotCAD 프로젝트로 저장하세요.",
   "text.18": "도면과 문서",
@@ -159,4 +159,3 @@
   "legal.trademark": "AutoCAD 및 DWG 는 미국 및 기타 국가에서 Autodesk, Inc. 의 등록 상표 또는 상표입니다.",
   "legal.not_affiliated": "LotCAD 는 Autodesk, Inc. 와 관련이 없으며 Autodesk 의 후원·보증을 받지 않습니다."
 }
-
