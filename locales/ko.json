@@ -157,5 +157,8 @@
   "web.note": "설치 없이 웹에서 실행하세요. WebGPU를 지원하는 브라우저가 필요합니다.",
   "legal.about": "정보 · 상표",
   "legal.trademark": "AutoCAD 및 DWG 는 미국 및 기타 국가에서 Autodesk, Inc. 의 등록 상표 또는 상표입니다.",
-  "legal.not_affiliated": "LotCAD 는 Autodesk, Inc. 와 관련이 없으며 Autodesk 의 후원·보증을 받지 않습니다."
+  "legal.not_affiliated": "LotCAD 는 Autodesk, Inc. 와 관련이 없으며 Autodesk 의 후원·보증을 받지 않습니다.",
+  "about.local-llm.title": "로컬 LLM 연동 2D → 3D",
+  "about.local-llm.description": "로컬 LLM과 연동하여 2D 평면도 이미지를 해석하고, LotCAD에서 3D 모델로 구현합니다.",
+  "about.local-llm.link": "실행 영상 보기 →"
 }
