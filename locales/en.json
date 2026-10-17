@@ -157,5 +157,8 @@
   "web.note": "Run in your browser without installation. A browser with WebGPU support is required.",
   "legal.about": "About · Trademarks",
   "legal.trademark": "AutoCAD and DWG are registered trademarks or trademarks of Autodesk, Inc. in the USA and/or other countries.",
-  "legal.not_affiliated": "LotCAD is not affiliated with, sponsored by, or endorsed by Autodesk, Inc."
+  "legal.not_affiliated": "LotCAD is not affiliated with, sponsored by, or endorsed by Autodesk, Inc.",
+  "about.local-llm.title": "Local LLM: 2D to 3D",
+  "about.local-llm.description": "Integrate a local LLM to interpret 2D floor plan images and build 3D models in LotCAD.",
+  "about.local-llm.link": "Watch the demo →"
 }
