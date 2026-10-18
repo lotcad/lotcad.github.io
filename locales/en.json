@@ -161,8 +161,8 @@
   "about.local-llm.title": "Local LLM: 2D to 3D",
   "about.local-llm.description": "Integrate a local LLM to interpret 2D floor plan images and build 3D models in LotCAD.",
   "about.local-llm.link": "Watch the demo →",
-  "cfd.title": "CFD & Physics Simulation (Coming Soon)",
-  "cfd.description": "Preview car wind tunnel, water sloshing and overflow, and cloth simulation features planned for LotCAD.",
+  "cfd.title": "CFD & Physics Simulation",
+  "cfd.description": "Explore LotCAD demos of car wind tunnels, water sloshing and overflow, and cloth simulation. These features are available in the installable LotCAD application. Plugin and sample SDK support is coming soon.",
   "cfd.playlist": "LotCAD CFD and physics simulation playlist",
   "cfd.link": "Watch the simulation playlist on YouTube →"
 }
