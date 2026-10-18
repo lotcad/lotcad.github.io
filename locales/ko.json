@@ -160,5 +160,9 @@
   "legal.not_affiliated": "LotCAD 는 Autodesk, Inc. 와 관련이 없으며 Autodesk 의 후원·보증을 받지 않습니다.",
   "about.local-llm.title": "로컬 LLM 연동 2D → 3D",
   "about.local-llm.description": "로컬 LLM과 연동하여 2D 평면도 이미지를 해석하고, LotCAD에서 3D 모델로 구현합니다.",
-  "about.local-llm.link": "실행 영상 보기 →"
+  "about.local-llm.link": "실행 영상 보기 →",
+  "cfd.title": "CFD와 물리 시뮬레이션",
+  "cfd.description": "LotCAD의 차량 풍동, 물 출렁임·넘침, 천 시뮬레이션 데모를 확인하세요.",
+  "cfd.playlist": "LotCAD CFD와 물리 시뮬레이션 재생목록",
+  "cfd.link": "YouTube에서 시뮬레이션 재생목록 보기 →"
 }
