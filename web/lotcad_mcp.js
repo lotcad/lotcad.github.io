@@ -5,7 +5,7 @@
 //     (명령행에 link on 을 칠 필요가 없다). 앱이 붙으면 notifications/tools/list_changed 로 CAD 도구를 다시 받게 한다.
 //   · 다른 도구를 불렀는데 앱이 없어도 같은 식으로 열고 기다린다.
 // 메시지는 네이티브 link 와 같다: {"type":"tools"} · {"type":"call","tool","args"} -> {"type":"result","content","isError"}.
-// 환경 변수: LOTCAD_PORT (7700), LOTCAD_WEB_URL (홈페이지 웹 앱), LOTCAD_TIMEOUT (초, 60), LOTCAD_ORIGINS (쉼표),
+// 환경 변수: LOTCAD_PORT (7701 - 네이티브 앱의 7700 과 다른 자리), LOTCAD_WEB_URL (홈페이지 웹 앱), LOTCAD_TIMEOUT (초, 60), LOTCAD_ORIGINS (쉼표),
 //            LOTCAD_NO_OPEN=1 (브라우저를 열지 않는다 - 시험).
 'use strict';
 const http = require('node:http');
@@ -13,12 +13,12 @@ const crypto = require('node:crypto');
 const { spawn } = require('node:child_process');
 const readline = require('node:readline');
 
-const PORT = Number(process.env.LOTCAD_PORT || 7700);
+const PORT = Number(process.env.LOTCAD_PORT || 7701);
 const HOST = '127.0.0.1';
 const TIMEOUT = Number(process.env.LOTCAD_TIMEOUT || 60) * 1000;
 const WEB_URL = process.env.LOTCAD_WEB_URL || 'https://lotcad.github.io/web/WebGPUApp.html';
 const ORIGINS = (process.env.LOTCAD_ORIGINS || 'https://lotcad.github.io').split(',').map(s => s.trim().toLowerCase().replace(/\/$/, '')).filter(Boolean);
-const SERVER_INFO = { name: 'lotcad-web', version: '0.2.0' };
+const SERVER_INFO = { name: 'lotcad-web', version: '0.3.0' };
 const INSTRUCTIONS = 'LotCAD is a CAD app running in the browser (Z up; units in get_scene). If only open_lotcad is listed, call it first - '
   + 'it opens LotCAD and connects. Start with get_scene. Build with ai_actions or run_command (AutoCAD-style command line: a command, '
   + 'then its values in following calls). Check results with capture_view (image) and get_object. Everything is undoable with run_command "undo".';
@@ -101,7 +101,9 @@ server.on('upgrade', (req, sock) => {
   sock.write('HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: ' + accept + '\r\n\r\n');
   attach(sock);
 });
-server.on('error', e => log(`cannot listen on ${HOST}:${PORT}: ${e.message}`));
+// 포트를 못 열면 (다른 프로그램이 같은 포트를 열고 있을 때) 앱이 붙을 수 없다 - 기다리지 않고 그 까닭을 답한다
+let listenError = '';
+server.on('error', e => { listenError = e.code || e.message; log(`cannot listen on ${HOST}:${PORT}: ${e.message}`); });
 server.listen(PORT, HOST, () => log(`waiting for LotCAD web on ws://${HOST}:${PORT}`));
 
 function requestApp(msg, timeout = TIMEOUT) {
@@ -136,12 +138,13 @@ function waitConnected(ms) {
 }
 async function ensureApp() {
   if (conn) return true;
+  if (listenError) return false;
   openApp();
   return waitConnected(45000);   // 첫 실행은 앱 내려받기 · 크롬의 로컬 네트워크 허락까지
 }
 
 const NOT_CONNECTED = `LotCAD did not connect. A browser tab with LotCAD should have opened (${WEB_URL}). If Chrome asks to allow access to `
-  + `apps on this device (local network), allow it. Or type \`link on\` in LotCAD's command line. Then try again.`;
+  + `apps on this device (local network), allow it. Or type \`link\` in LotCAD's command line. Then try again.`;
 const OPEN_TOOL = {
   name: 'open_lotcad',
   description: 'Open LotCAD (CAD app) in the browser and connect to it. Call this first when it is the only LotCAD tool; '
@@ -149,6 +152,9 @@ const OPEN_TOOL = {
   inputSchema: { type: 'object', properties: {} },
 };
 const text = (t, isError = false) => ({ content: [{ type: 'text', text: t }], isError });
+const PORT_BUSY = () => `LotCAD cannot connect: port ${PORT} on this computer is already used by another program (${listenError}). `
+  + `The installed LotCAD desktop app uses the same port - if it is running, close it and restart Claude, then try again.`;
+const notConnected = () => text(listenError ? PORT_BUSY() : NOT_CONNECTED, true);
 
 async function listTools() {
   if (!conn) return [OPEN_TOOL];
@@ -158,14 +164,14 @@ async function listTools() {
 async function callTool(name, args) {
   if (name === 'open_lotcad' || name === 'engine_status') {
     if (await ensureApp()) return text('LotCAD is connected. Call tools/list again (or just use get_scene, ai_actions, run_command, capture_view).');
-    return text(NOT_CONNECTED, true);
+    return notConnected();
   }
-  if (!(await ensureApp())) return text(NOT_CONNECTED, true);
+  if (!(await ensureApp())) return notConnected();
   try {
     const r = await requestApp({ type: 'call', tool: name, args: args || {} });
     return { content: r.content || [], isError: !!r.isError };
   } catch (e) {
-    return text(e.message === 'no answer' ? 'LotCAD did not answer in time.' : NOT_CONNECTED, true);
+    return e.message === 'no answer' ? text('LotCAD did not answer in time.', true) : notConnected();
   }
 }
 

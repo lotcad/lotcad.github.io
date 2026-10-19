@@ -2,7 +2,7 @@
 """LotCAD 웹 MCP 브리지 — MCP 클라이언트(Claude Desktop · Claude Code 등)와 브라우저에서 도는 LotCAD 웹 앱을 잇는다.
 
 네이티브 tools/lotcad_mcp.py 와 같은 일을 하되, 브라우저는 접속을 받을 수 없으므로 방향이 반대다:
-브리지가 127.0.0.1:7700 에서 WebSocket 을 열고, 웹 앱이 명령행 `link on` 으로 거기에 붙는다.
+브리지가 127.0.0.1:7701 (네이티브 앱의 7700 과 다른 자리) 에서 WebSocket 을 열고, 웹 앱이 명령행 `link on` 으로 거기에 붙는다.
 메시지는 네이티브 link 와 같다 — {"type":"tools","id":n} -> {"type":"tools","id":n,"tools":[…]},
 {"type":"call","tool":…,"args":{…},"id":n} -> {"type":"result","id":n,"content":[…],"isError":bool}.
 도구 정의는 앱 한 곳(src/app/lot_app_mcp_tools.cpp)에 있고 여기는 전달만 한다.
@@ -15,7 +15,7 @@
   2) 브라우저에서 LotCAD 웹을 열고 명령행에 `link on` (브리지가 아직 없으면 앱이 몇 초마다 다시 붙는다).
   3) "머그컵 만들어 줘" — 모델이 get_scene · ai_actions · run_command · capture_view 로 만들고 화면을 확인한다.
 
-환경 변수: LOTCAD_PORT (기본 7700), LOTCAD_TIMEOUT (초, 기본 60),
+환경 변수: LOTCAD_PORT (기본 7701), LOTCAD_TIMEOUT (초, 기본 60),
            LOTCAD_ORIGINS (접속을 받을 페이지 출처, 쉼표로. 기본: localhost · 127.0.0.1 · https://lotcad.github.io).
 외부 패키지 없음(파이썬 3.8+ 표준 라이브러리만). 로그는 stderr 로(stdout 은 MCP 메시지 전용).
 """
@@ -28,7 +28,7 @@ import struct
 import sys
 import threading
 
-PORT = int(os.environ.get("LOTCAD_PORT", "7700"))
+PORT = int(os.environ.get("LOTCAD_PORT", "7701"))
 HOST = "127.0.0.1"
 TIMEOUT = float(os.environ.get("LOTCAD_TIMEOUT", "60"))
 ORIGINS = [o.strip() for o in os.environ.get("LOTCAD_ORIGINS", "https://lotcad.github.io").split(",") if o.strip()]
@@ -39,8 +39,8 @@ INSTRUCTIONS = (
     "calls). Check results with capture_view (image) and get_object. Everything is undoable with run_command \"undo\"."
 )
 NOT_CONNECTED = (
-    "LotCAD web is not connected to this bridge (ws://{host}:{port}). Open LotCAD in the browser and type `link on` in its "
-    "command line (`link port N` if LOTCAD_PORT is not 7700)."
+    "LotCAD web is not connected to this bridge (ws://{host}:{port}). Open LotCAD in the browser and type `link` in its "
+    "command line (`link port N` if LOTCAD_PORT is not 7701)."
 )
 WS_GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 
@@ -69,6 +69,7 @@ class Browser:
         self.replies = {}
         self.next_id = 1
         self.send_lock = threading.Lock()
+        self.listen_error = ""
 
     # ── WebSocket 서버 ──
     def serve(self):
@@ -78,6 +79,7 @@ class Browser:
             srv.bind((HOST, PORT))
         except OSError as e:
             log(f"cannot listen on {HOST}:{PORT}: {e}")
+            self.listen_error = str(e)   # 앱이 붙을 수 없다 - 도구 답에 까닭을 (네이티브 LotCAD 가 같은 포트일 때 등)
             return
         srv.listen(4)
         log(f"waiting for LotCAD web on ws://{HOST}:{PORT} (type `link on` in the app)")
@@ -258,15 +260,24 @@ def list_tools():
         return [STATUS_TOOL]
 
 
+def not_connected():
+    if BROWSER.listen_error:
+        t = (f"LotCAD cannot connect: port {PORT} on this computer is already used by another program ({BROWSER.listen_error}). "
+             "The installed LotCAD desktop app uses the same port - if it is running, close it and restart this bridge, then try again.")
+    else:
+        t = NOT_CONNECTED.format(host=HOST, port=PORT)
+    return {"content": [{"type": "text", "text": t}], "isError": True}
+
+
 def call_tool(name, args):
     if name == "engine_status":
         if BROWSER.connected():
             return {"content": [{"type": "text", "text": "connected — call tools/list again for the CAD tools"}], "isError": False}
-        return {"content": [{"type": "text", "text": NOT_CONNECTED.format(host=HOST, port=PORT)}], "isError": True}
+        return not_connected()
     try:
         reply = BROWSER.request({"type": "call", "tool": name, "args": args or {}})
     except ConnectionError:
-        return {"content": [{"type": "text", "text": NOT_CONNECTED.format(host=HOST, port=PORT)}], "isError": True}
+        return not_connected()
     return {"content": reply.get("content", []), "isError": bool(reply.get("isError", False))}
 
 
