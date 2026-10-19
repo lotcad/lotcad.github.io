@@ -18,7 +18,7 @@ const HOST = '127.0.0.1';
 const TIMEOUT = Number(process.env.LOTCAD_TIMEOUT || 60) * 1000;
 const WEB_URL = process.env.LOTCAD_WEB_URL || 'https://lotcad.github.io/web/WebGPUApp.html';
 const ORIGINS = (process.env.LOTCAD_ORIGINS || 'https://lotcad.github.io').split(',').map(s => s.trim().toLowerCase().replace(/\/$/, '')).filter(Boolean);
-const SERVER_INFO = { name: 'lotcad-web', version: '0.3.0' };
+const SERVER_INFO = { name: 'lotcad-web', version: '0.3.1' };
 const INSTRUCTIONS = 'LotCAD is a CAD app running in the browser (Z up; units in get_scene). If only open_lotcad is listed, call it first - '
   + 'it opens LotCAD and connects. Start with get_scene. Build with ai_actions or run_command (AutoCAD-style command line: a command, '
   + 'then its values in following calls). Check results with capture_view (image) and get_object. Everything is undoable with run_command "undo".';
@@ -92,7 +92,28 @@ function attach(sock) {
   sock.on('error', () => {});
 }
 
-const server = http.createServer((req, res) => { res.writeHead(426); res.end('LotCAD MCP bridge: WebSocket only'); });
+// 자리 넘기기. Claude Desktop 은 확장을 두 벌 띄울 때가 있다 (같은 순간에 둘, 한쪽은 대화가 쓰고 다른 쪽은 놀고).
+// 먼저 포트를 잡은 쪽에 웹이 붙고, 대화가 부르는 쪽은 포트가 없어 '다른 프로그램이 쓴다' 고만 답했다 (2026-10-19).
+// 그래서 '쓰이는 쪽이 포트를 가진다': 포트가 없는 브리지가 도구 호출을 받으면 지금 주인에게 비켜 달라고 하고 (아래
+// requestYield) 포트를 잡는다. 웹 앱은 2 초마다 다시 붙으므로 새 주인에게 곧 붙는다.
+// 사용자 정의 헤더를 요구한다 - 웹 페이지는 CORS 사전 요청 없이는 이 헤더를 못 보내고, 여기는 그 요청에 답하지 않는다.
+const YIELD_PATH = '/lotcad-yield';
+const YIELD_HEADER = 'x-lotcad-yield';
+let yielded = false;        // 남에게 넘겨줬다 - 스스로 다시 잡지 않는다 (쓰일 때만 되찾는다)
+
+const server = http.createServer((req, res) => {
+  if (req.method === 'POST' && req.url === YIELD_PATH && req.headers[YIELD_HEADER] === '1' && !req.headers.origin) {
+    log('another LotCAD bridge is being used - handing the port over');
+    res.writeHead(200, { Connection: 'close' }); res.end('ok');
+    yielded = true;
+    listening = false;
+    listenError = 'handed over';
+    if (conn) { conn.destroy(); conn = null; notify('notifications/tools/list_changed'); }
+    server.close();
+    return;
+  }
+  res.writeHead(426); res.end('LotCAD MCP bridge: WebSocket only');
+});
 server.on('upgrade', (req, sock) => {
   const key = req.headers['sec-websocket-key'];
   if (String(req.headers.upgrade || '').toLowerCase() !== 'websocket' || !key) { sock.end('HTTP/1.1 400 Bad Request\r\n\r\n'); return; }
@@ -103,8 +124,50 @@ server.on('upgrade', (req, sock) => {
 });
 // 포트를 못 열면 (다른 프로그램이 같은 포트를 열고 있을 때) 앱이 붙을 수 없다 - 기다리지 않고 그 까닭을 답한다
 let listenError = '';
-server.on('error', e => { listenError = e.code || e.message; log(`cannot listen on ${HOST}:${PORT}: ${e.message}`); });
-server.listen(PORT, HOST, () => log(`waiting for LotCAD web on ws://${HOST}:${PORT}`));
+let listening = false;
+function listen() {
+  return new Promise(resolve => {
+    const onError = e => {
+      server.off('listening', onListening);
+      listening = false; listenError = e.code || e.message;
+      log(`cannot listen on ${HOST}:${PORT}: ${e.message}`);
+      resolve(false);
+    };
+    const onListening = () => {
+      server.off('error', onError);
+      listening = true; listenError = ''; yielded = false;
+      log(`waiting for LotCAD web on ws://${HOST}:${PORT}`);
+      resolve(true);
+    };
+    server.once('error', onError);
+    server.once('listening', onListening);
+    server.listen(PORT, HOST);
+  });
+}
+listen();
+
+// 포트가 없는데 도구가 불렸다 - 지금 주인(다른 LotCAD 브리지)에게 비켜 달라고 하고 포트를 잡는다.
+// 주인이 LotCAD 브리지가 아니면 (네이티브 데스크톱 앱 등) 요청이 실패하고 그대로 '포트를 쓴다' 로 답한다.
+function requestYield() {
+  return new Promise(resolve => {
+    const req = http.request({ host: HOST, port: PORT, path: YIELD_PATH, method: 'POST',
+                               headers: { [YIELD_HEADER]: '1' }, timeout: 2000 },
+      res => { res.resume(); resolve(res.statusCode === 200); });
+    req.on('error', () => resolve(false));
+    req.on('timeout', () => { req.destroy(); resolve(false); });
+    req.end();
+  });
+}
+async function claimPort() {
+  if (listening) return true;
+  if (!yielded && await listen()) return true;           // 그새 비었으면 그냥 잡는다
+  if (!(await requestYield())) return false;
+  for (let i = 0; i < 20; ++i) {                         // 상대가 닫을 때까지 잠깐
+    await new Promise(r => setTimeout(r, 150));
+    if (await listen()) { log('took the port over'); return true; }
+  }
+  return false;
+}
 
 function requestApp(msg, timeout = TIMEOUT) {
   return new Promise((resolve, reject) => {
@@ -138,7 +201,11 @@ function waitConnected(ms) {
 }
 async function ensureApp() {
   if (conn) return true;
-  if (listenError) return false;
+  if (!listening) {
+    if (!(await claimPort())) return false;
+    // 넘겨받았으면 열려 있던 탭이 2 초 안에 다시 붙는다 - 새 탭을 열기 전에 먼저 기다린다
+    if (await waitConnected(5000)) return true;
+  }
   openApp();
   return waitConnected(45000);   // 첫 실행은 앱 내려받기 · 크롬의 로컬 네트워크 허락까지
 }
