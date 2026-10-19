@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // LotCAD 웹 MCP 브리지 (Node, 외부 패키지 없음) - tools/lotcad_mcp_web.py 와 같은 일을 하고, 사용자가 할 일을 줄인다:
 //   · Claude Desktop 확장 (.mcpb) 으로 설치 - Claude Desktop 이 Node 를 갖고 있어 따로 깔 것이 없다.
-//   · 앱이 안 붙어 있으면 도구는 open_lotcad 하나 - 부르면 브라우저로 LotCAD 웹을 ?link=포트 로 열고 붙을 때까지 기다린다
-//     (명령행에 link on 을 칠 필요가 없다). 앱이 붙으면 notifications/tools/list_changed 로 CAD 도구를 다시 받게 한다.
-//   · 다른 도구를 불렀는데 앱이 없어도 같은 식으로 열고 기다린다.
+//   · 도구 목록은 앱이 없어도 open_lotcad + CAD 도구 전부 (CAD_TOOLS 고정 사본 - 목록을 한 번만 읽는 클라이언트도 바로 쓴다).
+//   · 아무 도구나 불렀는데 앱이 없으면 브라우저로 LotCAD 웹을 ?link=포트 로 열고 붙을 때까지 기다린다
+//     (명령행에 link on 을 칠 필요가 없다). 앱이 붙으면 notifications/tools/list_changed 도 보낸다 (다시 읽는 클라이언트용).
 // 메시지는 네이티브 link 와 같다: {"type":"tools"} · {"type":"call","tool","args"} -> {"type":"result","content","isError"}.
 // 환경 변수: LOTCAD_PORT (7701 - 네이티브 앱의 7700 과 다른 자리), LOTCAD_WEB_URL (홈페이지 웹 앱), LOTCAD_TIMEOUT (초, 60), LOTCAD_ORIGINS (쉼표),
 //            LOTCAD_NO_OPEN=1 (브라우저를 열지 않는다 - 시험).
@@ -18,9 +18,9 @@ const HOST = '127.0.0.1';
 const TIMEOUT = Number(process.env.LOTCAD_TIMEOUT || 60) * 1000;
 const WEB_URL = process.env.LOTCAD_WEB_URL || 'https://lotcad.github.io/web/WebGPUApp.html';
 const ORIGINS = (process.env.LOTCAD_ORIGINS || 'https://lotcad.github.io').split(',').map(s => s.trim().toLowerCase().replace(/\/$/, '')).filter(Boolean);
-const SERVER_INFO = { name: 'lotcad-web', version: '0.3.1' };
-const INSTRUCTIONS = 'LotCAD is a CAD app running in the browser (Z up; units in get_scene). If only open_lotcad is listed, call it first - '
-  + 'it opens LotCAD and connects. Start with get_scene. Build with ai_actions or run_command (AutoCAD-style command line: a command, '
+const SERVER_INFO = { name: 'lotcad-web', version: '0.3.2' };
+const INSTRUCTIONS = 'LotCAD is a CAD app running in the browser (Z up; units in get_scene). Any LotCAD tool opens LotCAD and connects '
+  + 'by itself if it is not open yet (the first call can take a while). Start with get_scene. Build with ai_actions or run_command (AutoCAD-style command line: a command, '
   + 'then its values in following calls). Check results with capture_view (image) and get_object. Everything is undoable with run_command "undo".';
 const WS_GUID = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
 
@@ -214,23 +214,39 @@ const NOT_CONNECTED = `LotCAD did not connect. A browser tab with LotCAD should 
   + `apps on this device (local network), allow it. Or type \`link\` in LotCAD's command line. Then try again.`;
 const OPEN_TOOL = {
   name: 'open_lotcad',
-  description: 'Open LotCAD (CAD app) in the browser and connect to it. Call this first when it is the only LotCAD tool; '
-    + 'after it connects, the CAD tools (get_scene, ai_actions, run_command, capture_view ...) appear.',
+  description: 'Open LotCAD (CAD app) in the browser and connect to it. Not needed before other tools - they open and connect '
+    + 'by themselves; use it to bring LotCAD up or check the connection.',
   inputSchema: { type: 'object', properties: {} },
 };
+// CAD 도구 정의의 사본 (원본은 앱 src/app/lot_app_mcp_tools.cpp mcpToolList). 웹이 붙기 전에도 tools/list 에 늘 낸다 -
+// Claude 데스크톱 Code 탭은 tools/list_changed 를 받아도 목록을 다시 읽지 않아, 처음 목록에 없으면 세션 내내 안 보인다 (2026-10-19).
+// 앱의 정의를 바꾸면 여기도 (회귀 mcp-link-node 가 웹이 낸 목록과 같은지 본다).
+const CAD_TOOLS = [
+  {"name":"get_scene","description":"Summary of the whole document: object count, kinds, layers, bounds (Z up, units field mm or m) and the first objects (id, kind, layer, center, size, radius/length/text). Read this first.","inputSchema":{"type":"object","properties":{"max_objects":{"type":"integer","description":"objects listed (default 50)"}},"required":[]}},
+  {"name":"get_object","description":"Full JSON of one object: kind, layer, transform, bounds and kind-specific geometry in world units (line start/end, circle center/radius, polyline points, dimension value, feature history ...).","inputSchema":{"type":"object","properties":{"id":{"type":"integer"}},"required":["id"]}},
+  {"name":"query_objects","description":"Find object ids with a filter: {\"kind\":\"circle\"|[..], \"layer\":name|id, \"selected\":true, \"visible\":true, \"within\":{\"min\":[x,y,z],\"max\":[..]}, \"intersects\":{..}, \"near\":{\"point\":[x,y,z],\"radius\":r}, \"pick\":\"largest\"|\"smallest\", \"limit\":N}.","inputSchema":{"type":"object","properties":{"filter":{"type":"object"}},"required":["filter"]}},
+  {"name":"select","description":"Set the selection (most edit commands act on it). Empty ids clears it. additive=true adds to it.","inputSchema":{"type":"object","properties":{"ids":{"type":"array","items":{"type":"integer"}},"additive":{"type":"boolean"}},"required":["ids"]}},
+  {"name":"set_property","description":"Set one property by the same keys get_object returns (color [r,g,b] 0..1, visible, layer, position, scale, radius, start/end, points, closed, text, height, precision ...). World units. One undo step.","inputSchema":{"type":"object","properties":{"id":{"type":"integer"},"key":{"type":"string"},"value":{}},"required":["id","key","value"]}},
+  {"name":"run_command","description":"Type one line into the AutoCAD-style command line, exactly as a user would, then Enter. Commands that wait for values take them in the next calls, e.g. \"circle\" -> \"0,0\" -> \"20\"; while waiting, text is a value, not a new command, and an empty text finishes the tool. cancel=true presses ESC (cancel the waiting command / tool). Examples: line, rec, circle, move, extrude, fillet, dli, undo, redo, zoom. The reply has the prompt the command is waiting on.","inputSchema":{"type":"object","properties":{"text":{"type":"string"},"cancel":{"type":"boolean","description":"press ESC instead of typing"}},"required":[]}},
+  {"name":"ai_actions","description":"Run structured CAD actions (same contract as the in-app AI command line): create_primitive (world units, position = base centre, solid sits on it in +Z: cube size [x,y,z]; wedge size [x,y,z]; sphere/torus radius (+minor_radius); cylinder/cone radius+height; pyramid radius+height+sides; tube radius+inner_radius+height), draw_sketch (line/circle/arc/polyline/rectangle/polygon/leader), edit_selected (select/move/copy/rotate/scale/color/delete/set/fillet/chamfer/join/offset/mirror/trim/extend/hatch with ids or filter), view_control, command. One undo step for the whole list. Returns what each action did.","inputSchema":{"type":"object","properties":{"actions":{"type":"array","items":{"type":"object","properties":{"type":{"type":"string","enum":["create_primitive","draw_sketch","edit_selected","view_control","file","create_room","analyze","create_floorplan","command","create_wall_graph","explode"]},"op":{"type":"string","enum":["move","copy","rotate","scale","color","delete","select","deselect","select_all","clear_all","set","pushpull","fillet","chamfer","remove_feature","meshfix","meshsmooth","meshdecimate","meshstitch","thicken","remesh","array3d","stretch","lengthen","break","union","intersect","subtract","hatch","shell","join","offset","mirror","trim","extend","interference","meshcheck","zoom_extents","zoom_to_last","top","front","right","iso","plan","ortho","perspective","grid_on","grid_off","light_on","light_off","light_toggle","style_shaded","style_shaded_edge","style_wireframe","style_wireframe_edge","style_hidden_line","open","save","import","plot","status","solve","auto","clear","amount","play","back","part","spin","balloons","bom","manual"]}},"required":["type"]}}},"required":["actions"]}},
+  {"name":"capture_view","description":"Screenshot of the current viewport as an image, so you can check the result visually. clean=true hides the grid. max_size = longest side in px (default 1280).","inputSchema":{"type":"object","properties":{"clean":{"type":"boolean"},"max_size":{"type":"integer"}},"required":[]}},
+];
 const text = (t, isError = false) => ({ content: [{ type: 'text', text: t }], isError });
 const PORT_BUSY = () => `LotCAD cannot connect: port ${PORT} on this computer is already used by another program (${listenError}). `
   + `The installed LotCAD desktop app uses the same port - if it is running, close it and restart Claude, then try again.`;
 const notConnected = () => text(listenError ? PORT_BUSY() : NOT_CONNECTED, true);
 
+// 앱이 없어도 open_lotcad + CAD 도구 전부. 붙어 있으면 앱의 목록이 먼저, 고정 목록에만 있는 것은 뒤에 (빠지지 않게).
 async function listTools() {
-  if (!conn) return [OPEN_TOOL];
-  try { return (await requestApp({ type: 'tools' }, 10000)).tools || [OPEN_TOOL]; } catch { return [OPEN_TOOL]; }
+  let web = [];
+  if (conn) { try { web = (await requestApp({ type: 'tools' }, 10000)).tools || []; } catch { web = []; } }
+  const names = new Set(web.map(t => t.name));
+  return [OPEN_TOOL, ...web, ...CAD_TOOLS.filter(t => !names.has(t.name))];
 }
 
 async function callTool(name, args) {
   if (name === 'open_lotcad' || name === 'engine_status') {
-    if (await ensureApp()) return text('LotCAD is connected. Call tools/list again (or just use get_scene, ai_actions, run_command, capture_view).');
+    if (await ensureApp()) return text('LotCAD is connected. Use get_scene, ai_actions, run_command, capture_view.');
     return notConnected();
   }
   if (!(await ensureApp())) return notConnected();

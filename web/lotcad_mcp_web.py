@@ -5,7 +5,7 @@
 브리지가 127.0.0.1:7701 (네이티브 앱의 7700 과 다른 자리) 에서 WebSocket 을 열고, 웹 앱이 명령행 `link on` 으로 거기에 붙는다.
 메시지는 네이티브 link 와 같다 — {"type":"tools","id":n} -> {"type":"tools","id":n,"tools":[…]},
 {"type":"call","tool":…,"args":{…},"id":n} -> {"type":"result","id":n,"content":[…],"isError":bool}.
-도구 정의는 앱 한 곳(src/app/lot_app_mcp_tools.cpp)에 있고 여기는 전달만 한다.
+도구 정의는 앱 한 곳(src/app/lot_app_mcp_tools.cpp)에 있고 여기는 전달한다 - 앱이 붙기 전 tools/list 용 사본만 CAD_TOOLS 에.
 
 쓰는 법
   1) MCP 클라이언트에 등록한다.
@@ -32,7 +32,7 @@ PORT = int(os.environ.get("LOTCAD_PORT", "7701"))
 HOST = "127.0.0.1"
 TIMEOUT = float(os.environ.get("LOTCAD_TIMEOUT", "60"))
 ORIGINS = [o.strip() for o in os.environ.get("LOTCAD_ORIGINS", "https://lotcad.github.io").split(",") if o.strip()]
-SERVER_INFO = {"name": "lotcad-web", "version": "0.1.0"}
+SERVER_INFO = {"name": "lotcad-web", "version": "0.3.2"}
 INSTRUCTIONS = (
     "LotCAD is a CAD engine running in a browser (Z up; units are the document's, see get_scene units). Start with "
     "get_scene. Build with ai_actions or run_command (AutoCAD-style command line: a command, then its values in following "
@@ -247,17 +247,35 @@ BROWSER = Browser()
 
 STATUS_TOOL = {
     "name": "engine_status",
-    "description": "LotCAD web is not connected yet. Call this to see how to connect; the CAD tools appear after the app runs `link on`.",
+    "description": "Is LotCAD web connected to this bridge? If not, says how to connect (the app runs `link on`). The CAD tools are always listed; they work once the app is connected.",
     "inputSchema": {"type": "object", "properties": {}},
 }
 
 
+# CAD 도구 정의의 사본 (원본은 앱 src/app/lot_app_mcp_tools.cpp mcpToolList, tools/mcpb/server/index.js 와 같은 것).
+# 앱이 붙기 전에도 tools/list 에 늘 낸다 - 클라이언트는 목록을 처음 한 번만 읽는다 (listChanged 없음).
+# 앱의 정의를 바꾸면 여기도 (회귀 mcp-link 가 웹이 낸 목록과 같은지 본다).
+CAD_TOOLS = [
+    {"name":"get_scene","description":"Summary of the whole document: object count, kinds, layers, bounds (Z up, units field mm or m) and the first objects (id, kind, layer, center, size, radius/length/text). Read this first.","inputSchema":{"type":"object","properties":{"max_objects":{"type":"integer","description":"objects listed (default 50)"}},"required":[]}},
+    {"name":"get_object","description":"Full JSON of one object: kind, layer, transform, bounds and kind-specific geometry in world units (line start/end, circle center/radius, polyline points, dimension value, feature history ...).","inputSchema":{"type":"object","properties":{"id":{"type":"integer"}},"required":["id"]}},
+    {"name":"query_objects","description":"Find object ids with a filter: {\"kind\":\"circle\"|[..], \"layer\":name|id, \"selected\":true, \"visible\":true, \"within\":{\"min\":[x,y,z],\"max\":[..]}, \"intersects\":{..}, \"near\":{\"point\":[x,y,z],\"radius\":r}, \"pick\":\"largest\"|\"smallest\", \"limit\":N}.","inputSchema":{"type":"object","properties":{"filter":{"type":"object"}},"required":["filter"]}},
+    {"name":"select","description":"Set the selection (most edit commands act on it). Empty ids clears it. additive=true adds to it.","inputSchema":{"type":"object","properties":{"ids":{"type":"array","items":{"type":"integer"}},"additive":{"type":"boolean"}},"required":["ids"]}},
+    {"name":"set_property","description":"Set one property by the same keys get_object returns (color [r,g,b] 0..1, visible, layer, position, scale, radius, start/end, points, closed, text, height, precision ...). World units. One undo step.","inputSchema":{"type":"object","properties":{"id":{"type":"integer"},"key":{"type":"string"},"value":{}},"required":["id","key","value"]}},
+    {"name":"run_command","description":"Type one line into the AutoCAD-style command line, exactly as a user would, then Enter. Commands that wait for values take them in the next calls, e.g. \"circle\" -> \"0,0\" -> \"20\"; while waiting, text is a value, not a new command, and an empty text finishes the tool. cancel=true presses ESC (cancel the waiting command / tool). Examples: line, rec, circle, move, extrude, fillet, dli, undo, redo, zoom. The reply has the prompt the command is waiting on.","inputSchema":{"type":"object","properties":{"text":{"type":"string"},"cancel":{"type":"boolean","description":"press ESC instead of typing"}},"required":[]}},
+    {"name":"ai_actions","description":"Run structured CAD actions (same contract as the in-app AI command line): create_primitive (world units, position = base centre, solid sits on it in +Z: cube size [x,y,z]; wedge size [x,y,z]; sphere/torus radius (+minor_radius); cylinder/cone radius+height; pyramid radius+height+sides; tube radius+inner_radius+height), draw_sketch (line/circle/arc/polyline/rectangle/polygon/leader), edit_selected (select/move/copy/rotate/scale/color/delete/set/fillet/chamfer/join/offset/mirror/trim/extend/hatch with ids or filter), view_control, command. One undo step for the whole list. Returns what each action did.","inputSchema":{"type":"object","properties":{"actions":{"type":"array","items":{"type":"object","properties":{"type":{"type":"string","enum":["create_primitive","draw_sketch","edit_selected","view_control","file","create_room","analyze","create_floorplan","command","create_wall_graph","explode"]},"op":{"type":"string","enum":["move","copy","rotate","scale","color","delete","select","deselect","select_all","clear_all","set","pushpull","fillet","chamfer","remove_feature","meshfix","meshsmooth","meshdecimate","meshstitch","thicken","remesh","array3d","stretch","lengthen","break","union","intersect","subtract","hatch","shell","join","offset","mirror","trim","extend","interference","meshcheck","zoom_extents","zoom_to_last","top","front","right","iso","plan","ortho","perspective","grid_on","grid_off","light_on","light_off","light_toggle","style_shaded","style_shaded_edge","style_wireframe","style_wireframe_edge","style_hidden_line","open","save","import","plot","status","solve","auto","clear","amount","play","back","part","spin","balloons","bom","manual"]}},"required":["type"]}}},"required":["actions"]}},
+    {"name":"capture_view","description":"Screenshot of the current viewport as an image, so you can check the result visually. clean=true hides the grid. max_size = longest side in px (default 1280).","inputSchema":{"type":"object","properties":{"clean":{"type":"boolean"},"max_size":{"type":"integer"}},"required":[]}},
+]
+
 def list_tools():
-    try:
-        return BROWSER.request({"type": "tools"}).get("tools", [])
-    except ConnectionError as e:
-        log("tools/list: app not connected:", e)
-        return [STATUS_TOOL]
+    """engine_status + CAD 도구 전부. 앱이 붙어 있으면 앱의 목록이 먼저, 고정 목록에만 있는 것은 뒤에."""
+    web = []
+    if BROWSER.connected():
+        try:
+            web = BROWSER.request({"type": "tools"}, 10).get("tools", [])
+        except ConnectionError as e:
+            log("tools/list: app not connected:", e)
+    names = {t.get("name") for t in web}
+    return [STATUS_TOOL] + web + [t for t in CAD_TOOLS if t["name"] not in names]
 
 
 def not_connected():
@@ -272,7 +290,7 @@ def not_connected():
 def call_tool(name, args):
     if name == "engine_status":
         if BROWSER.connected():
-            return {"content": [{"type": "text", "text": "connected — call tools/list again for the CAD tools"}], "isError": False}
+            return {"content": [{"type": "text", "text": "connected"}], "isError": False}
         return not_connected()
     try:
         reply = BROWSER.request({"type": "call", "tool": name, "args": args or {}})
