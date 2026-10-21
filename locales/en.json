@@ -164,5 +164,16 @@
   "cfd.title": "CFD & Physics Simulation",
   "cfd.description": "Explore LotCAD demos of car wind tunnels, water sloshing and overflow, and cloth simulation. These features are available in the installable LotCAD application. Plugin and sample SDK support is coming soon.",
   "cfd.playlist": "LotCAD CFD and physics simulation playlist",
-  "cfd.link": "Watch the simulation playlist on YouTube →"
+  "cfd.link": "Watch the simulation playlist on YouTube →",
+  "developers.nav": "Developers",
+  "developers.title": "Developer Center",
+  "developers.description": "Build your own applications with the API for LotCAD's C++ engine. C++ and C# SDK examples are available, and Python API integration and examples are in development.",
+  "developers.cpp.description": "Call the native C API directly. SDK examples show how to connect rendering and CAD commands to your C++ application.",
+  "developers.cpp.link": "Explore the C++ API example →",
+  "developers.csharp.description": "Call the native C API through P/Invoke to integrate the engine into .NET applications. Get started with WPF and WinForms examples.",
+  "developers.csharp.wpf": "Explore the C# / WPF example →",
+  "developers.csharp.winforms": "Explore the C# / WinForms example →",
+  "developers.python.status": "In development",
+  "developers.python.description": "Python integration and examples are in development so you can use the LotCAD API from Python.",
+  "developers.sdk.link": "Explore the SDK and all developer examples →"
 }
