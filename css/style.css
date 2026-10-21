@@ -115,18 +115,6 @@ h2 { font-size: 30px; margin-bottom: 12px; }
 }
 .card h3 { margin-top: 0; }
 .card p { color: var(--muted); }
-.development-status {
-  display: inline-block;
-  margin-left: 8px;
-  padding: 2px 9px;
-  border: 1px solid #67552d;
-  border-radius: 20px;
-  color: #f0c674;
-  background: #2e2818;
-  font-size: 12px;
-  font-weight: 600;
-  vertical-align: middle;
-}
 .platforms {
   display: flex;
   flex-wrap: wrap;

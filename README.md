@@ -67,8 +67,9 @@ Your example copies in Documents/LotCAD Examples are yours to keep or delete.
 ## Developers
 
 LotCAD's engine is developed in C++. Integrate it through the native C API from
-C++, or use P/Invoke from C# with the WPF and WinForms examples. Python API
-integration and examples are currently in development.
+C++, or use P/Invoke from C# with the WPF and WinForms examples. The
+[Python example](https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/python)
+uses ctypes bindings and embeds the engine in a PySide6 window.
 
 The engine is also available as an SDK with host samples (Qt/QML, MFC, WinForms, WPF, Swift, Android, C++):
 **[Vulkan_CMake_Sample](https://github.com/lotcad/Vulkan_CMake_Sample)**.
