@@ -5,7 +5,7 @@
   const cache = new Map();
   let current = "ko";
   let request = 0;
-  let languages = [{ code: "ko", label: "한국어" }, { code: "en", label: "English" }];
+  let languages = [{"code": "ko", "label": "한국어"}, {"code": "en", "label": "English"}, {"code": "de", "label": "Deutsch"}, {"code": "fr", "label": "Français"}, {"code": "es", "label": "Español"}, {"code": "pt-BR", "label": "Português (Brasil)"}, {"code": "ru", "label": "Русский"}, {"code": "ja", "label": "日本語"}, {"code": "zh-CN", "label": "简体中文"}];
 
   async function readJson(path) {
     const response = await fetch(path);
@@ -18,7 +18,7 @@
       const value = messages[element.dataset.i18n];
       if (typeof value === "string") element.textContent = value;
     });
-    ["alt", "title", "content"].forEach(attribute => {
+    ["alt", "title", "content", "aria-label"].forEach(attribute => {
       document.querySelectorAll("[data-i18n-" + attribute + "]").forEach(element => {
         const value = messages[element.getAttribute("data-i18n-" + attribute)];
         if (typeof value === "string") element.setAttribute(attribute, value);
@@ -41,9 +41,9 @@
     } catch (_) {
       if (token !== request) return;
       select.value = current;
-      status.textContent = current === "ko"
+      status.textContent = (cache.get(current) || {})["language.error"] || (current === "ko"
         ? "언어를 불러오지 못했습니다. 다시 선택해 주세요."
-        : "Could not load the language. Please try again.";
+        : "Could not load the language. Please try again.");
     }
   }
 

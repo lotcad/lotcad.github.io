@@ -29,6 +29,13 @@
       <select id="language-select">
         <option value="ko" lang="ko" selected>한국어</option>
         <option value="en" lang="en">English</option>
+        <option value="de" lang="de">Deutsch</option>
+        <option value="fr" lang="fr">Français</option>
+        <option value="es" lang="es">Español</option>
+        <option value="pt-BR" lang="pt-BR">Português (Brasil)</option>
+        <option value="ru" lang="ru">Русский</option>
+        <option value="ja" lang="ja">日本語</option>
+        <option value="zh-CN" lang="zh-CN">简体中文</option>
       </select>
       <span id="language-status" role="status" aria-live="polite"></span>
     </div>
@@ -100,19 +107,19 @@
           <figcaption><h3><span data-i18n="text.33">내비게이션과 장애물 회피</span></h3><p><span data-i18n="text.34">내비게이션 테스트 데모에서 장애물을 돌아가는 경로를 계산한 화면입니다. 목적지를 클릭하면 에이전트가 장면 안에서 이동합니다.</span></p><a class="text-link" href="#navigation-demo"><span data-i18n="text.35">내비게이션 영상 보기 →</span></a></figcaption>
         </figure>
         <figure class="screenshot-card">
-          <a href="https://youtu.be/yKV2bWgZLDI" target="_blank" rel="noopener noreferrer" aria-label="로컬 LLM 연동 2D 평면도 3D 구현 영상 보기"><img src="images/lotcad-local-llm.jpg" alt="LotCAD 로컬 LLM 연동 2D 평면도 3D 구현 영상 대표 화면" width="1170" height="649" loading="lazy"></a>
+          <a href="https://youtu.be/yKV2bWgZLDI" target="_blank" rel="noopener noreferrer" aria-label="로컬 LLM 연동 2D 평면도 3D 구현 영상 보기" data-i18n-aria-label="video.llm.label"><img src="images/lotcad-local-llm.jpg" alt="LotCAD 로컬 LLM 연동 2D 평면도 3D 구현 영상 대표 화면" data-i18n-alt="image.llm" width="1170" height="649" loading="lazy"></a>
           <figcaption>
-            <h3>로컬 LLM 연동 2D 평면도 3D 구현</h3>
-            <p>로컬 LLM과 연동하여 2D 평면도 이미지를 바탕으로 3D 모델을 구현하는 데모입니다.</p>
-            <a class="text-link" href="https://youtu.be/yKV2bWgZLDI" target="_blank" rel="noopener noreferrer">YouTube 영상 보기 →</a>
+            <h3><span data-i18n="screenshots.llm.title">로컬 LLM 연동 2D 평면도 3D 구현</span></h3>
+            <p><span data-i18n="screenshots.llm.description">로컬 LLM과 연동하여 2D 평면도 이미지를 바탕으로 3D 모델을 구현하는 데모입니다.</span></p>
+            <a class="text-link" href="https://youtu.be/yKV2bWgZLDI" target="_blank" rel="noopener noreferrer"><span data-i18n="video.watch">YouTube 영상 보기 →</span></a>
           </figcaption>
         </figure>
         <figure class="screenshot-card">
-          <a href="https://youtu.be/jVNagt93QvA" target="_blank" rel="noopener noreferrer" aria-label="리깅 및 관절 애니메이션 영상 보기"><img src="images/lotcad-rigging.jpg" alt="LotCAD 리깅 및 관절 애니메이션 영상 대표 화면" width="1600" height="900" loading="lazy"></a>
+          <a href="https://youtu.be/jVNagt93QvA" target="_blank" rel="noopener noreferrer" aria-label="리깅 및 관절 애니메이션 영상 보기" data-i18n-aria-label="video.rigging.label"><img src="images/lotcad-rigging.jpg" alt="LotCAD 리깅 및 관절 애니메이션 영상 대표 화면" data-i18n-alt="image.rigging" width="1600" height="900" loading="lazy"></a>
           <figcaption>
-            <h3>리깅과 관절 애니메이션</h3>
-            <p>부모·자식 계층 구조로 객체를 연결하고, 회전축과 피벗을 지정해 관절을 제어합니다. 수동 회전과 자동 왕복 운동, 위상 차이 및 ROS 없이 URDF 불러오기를 시연합니다.</p>
-            <a class="text-link" href="#joint-demo">관절 애니메이션 데모 보기 →</a>
+            <h3><span data-i18n="screenshots.rigging.title">리깅과 관절 애니메이션</span></h3>
+            <p><span data-i18n="screenshots.rigging.description">부모·자식 계층 구조로 객체를 연결하고, 회전축과 피벗을 지정해 관절을 제어합니다. 수동 회전과 자동 왕복 운동, 위상 차이 및 ROS 없이 URDF 불러오기를 시연합니다.</span></p>
+            <a class="text-link" href="#joint-demo"><span data-i18n="screenshots.rigging.link">관절 애니메이션 데모 보기 →</span></a>
           </figcaption>
         </figure>
       </div>
@@ -202,9 +209,9 @@
           <a class="text-link" href="https://github.com/lotcad/Vulkan_CMake_Sample/tree/main/sample/shared"><span data-i18n="text.119">로봇 예제 보기 →</span></a>
         </div>
         <div class="card">
-          <h3>로컬 LLM 기반 2D → 3D 변환</h3>
-          <p>로컬 LLM과 연동해 2D 평면도 이미지를 해석하고, 이를 바탕으로 LotCAD에서 3D 모델을 구현합니다.</p>
-          <a class="text-link" href="#screenshots">2D 평면도 3D 구현 데모 보기 →</a>
+          <h3><span data-i18n="features.llm.title">로컬 LLM 기반 2D → 3D 변환</span></h3>
+          <p><span data-i18n="features.llm.description">로컬 LLM과 연동해 2D 평면도 이미지를 해석하고, 이를 바탕으로 LotCAD에서 3D 모델을 구현합니다.</span></p>
+          <a class="text-link" href="#screenshots"><span data-i18n="features.llm.link">2D 평면도 3D 구현 데모 보기 →</span></a>
         </div>
         <div class="card">
           <h3><span data-i18n="text.120">네이티브 C API</span></h3>
@@ -250,12 +257,12 @@
     </section>
 
     <section id="joint-demo">
-      <h2>부모·자식 계층 구조와 관절 애니메이션</h2>
-      <p class="muted">LotCAD에서 객체를 부모·자식 구조로 연결하고 회전축과 피벗을 설정해 관절을 제어합니다. 수동 슬라이더, 자동 왕복 운동, 관절별 위상 차이와 ROS 없이 URDF 불러오기를 시연합니다.</p>
+      <h2><span data-i18n="joint.title">부모·자식 계층 구조와 관절 애니메이션</span></h2>
+      <p class="muted"><span data-i18n="joint.description">LotCAD에서 객체를 부모·자식 구조로 연결하고 회전축과 피벗을 설정해 관절을 제어합니다. 수동 슬라이더, 자동 왕복 운동, 관절별 위상 차이와 ROS 없이 URDF 불러오기를 시연합니다.</span></p>
       <div class="video-player">
         <iframe
           src="https://www.youtube.com/embed/jVNagt93QvA"
-          title="LotCAD 관절 및 로봇 애니메이션 데모"
+          title="LotCAD 관절 및 로봇 애니메이션 데모" data-i18n-title="video.joint"
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
@@ -263,7 +270,7 @@
         </iframe>
       </div>
       <div class="buttons">
-        <a class="button secondary" href="https://youtu.be/jVNagt93QvA" target="_blank" rel="noopener noreferrer">YouTube에서 관절 데모 보기 →</a>
+        <a class="button secondary" href="https://youtu.be/jVNagt93QvA" target="_blank" rel="noopener noreferrer"><span data-i18n="joint.link">YouTube에서 관절 데모 보기 →</span></a>
       </div>
     </section>
 

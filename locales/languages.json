@@ -6,6 +6,33 @@
   {
     "code": "en",
     "label": "English"
+  },
+  {
+    "code": "de",
+    "label": "Deutsch"
+  },
+  {
+    "code": "fr",
+    "label": "Français"
+  },
+  {
+    "code": "es",
+    "label": "Español"
+  },
+  {
+    "code": "pt-BR",
+    "label": "Português (Brasil)"
+  },
+  {
+    "code": "ru",
+    "label": "Русский"
+  },
+  {
+    "code": "ja",
+    "label": "日本語"
+  },
+  {
+    "code": "zh-CN",
+    "label": "简体中文"
   }
 ]
-
