@@ -15,7 +15,13 @@
   2) 브라우저에서 LotCAD 웹을 열고 명령행에 `link on` (브리지가 아직 없으면 앱이 몇 초마다 다시 붙는다).
   3) "머그컵 만들어 줘" — 모델이 get_scene · ai_actions · run_command · capture_view 로 만들고 화면을 확인한다.
 
-환경 변수: LOTCAD_PORT (기본 7701), LOTCAD_TIMEOUT (초, 기본 60),
+자세 중계 (--relay [포트], 또는 LOTCAD_RELAY=포트): 그 TCP 포트 (기본 7700 - 네이티브 앱 자리) 에서 줄 단위 JSON 을 받아
+  {"type":"pose"|"eye"|"ping"} 만 앱으로 넘긴다. 네이티브 tools/tag_tracker.py · 로봇 스크립트가 네이티브 앱 대신 웹 앱을 움직인다:
+       python3 tools/lotcad_mcp_web.py --relay          (터미널에서 - MCP 클라이언트 없이 중계만, stdin 을 읽지 않는다)
+       python3 ../3dEngine/tools/tag_tracker.py --map tag_map.json --port 7700
+  브라우저 안에서 바로 추적하려면 앱의 명령 tag (카메라 창) - 이 중계가 필요 없다.
+
+환경 변수: LOTCAD_PORT (기본 7701), LOTCAD_TIMEOUT (초, 기본 60), LOTCAD_RELAY (자세 중계 포트, 기본 끔),
            LOTCAD_ORIGINS (접속을 받을 페이지 출처, 쉼표로. 기본: localhost · 127.0.0.1 · https://lotcad.github.io).
 외부 패키지 없음(파이썬 3.8+ 표준 라이브러리만). 로그는 stderr 로(stdout 은 MCP 메시지 전용).
 """
@@ -29,10 +35,12 @@ import sys
 import threading
 
 PORT = int(os.environ.get("LOTCAD_PORT", "7701"))
+RELAY = int(os.environ.get("LOTCAD_RELAY", "0"))
+RELAY_TYPES = ("pose", "eye", "ping")   # 중계로는 이것만 - MCP 도구 (tools · call) 는 MCP 쪽으로만
 HOST = "127.0.0.1"
 TIMEOUT = float(os.environ.get("LOTCAD_TIMEOUT", "60"))
 ORIGINS = [o.strip() for o in os.environ.get("LOTCAD_ORIGINS", "https://lotcad.github.io").split(",") if o.strip()]
-SERVER_INFO = {"name": "lotcad-web", "version": "0.3.2"}
+SERVER_INFO = {"name": "lotcad-web", "version": "0.3.3"}
 INSTRUCTIONS = (
     "LotCAD is a CAD engine running in a browser (Z up; units are the document's, see get_scene units). Start with "
     "get_scene. Build with ai_actions or run_command (AutoCAD-style command line: a command, then its values in following "
@@ -220,6 +228,18 @@ class Browser:
             self.replies[rid] = msg
             self.lock.notify_all()
 
+    def forward(self, raw):
+        """중계 - 줄 하나를 앱에 그대로 (답을 기다리지 않는다). 앱이 없으면 버린다."""
+        with self.lock:
+            c = self.conn
+        if c is None:
+            return False
+        try:
+            self._send_frame(c, 1, raw)
+        except OSError:
+            return False
+        return True
+
     # ── 요청 ──
     def connected(self):
         with self.lock:
@@ -258,11 +278,14 @@ STATUS_TOOL = {
 CAD_TOOLS = [
     {"name":"get_scene","description":"Summary of the whole document: object count, kinds, layers, bounds (Z up, units field mm or m) and the first objects (id, kind, layer, center, size, radius/length/text). Read this first.","inputSchema":{"type":"object","properties":{"max_objects":{"type":"integer","description":"objects listed (default 50)"}},"required":[]}},
     {"name":"get_object","description":"Full JSON of one object: kind, layer, transform, bounds and kind-specific geometry in world units (line start/end, circle center/radius, polyline points, dimension value, feature history ...).","inputSchema":{"type":"object","properties":{"id":{"type":"integer"}},"required":["id"]}},
-    {"name":"query_objects","description":"Find object ids with a filter: {\"kind\":\"circle\"|[..], \"layer\":name|id, \"selected\":true, \"visible\":true, \"within\":{\"min\":[x,y,z],\"max\":[..]}, \"intersects\":{..}, \"near\":{\"point\":[x,y,z],\"radius\":r}, \"pick\":\"largest\"|\"smallest\", \"limit\":N}.","inputSchema":{"type":"object","properties":{"filter":{"type":"object"}},"required":["filter"]}},
+    {"name":"query_objects","description":"Find object ids with a filter: {\"kind\":\"circle\"|[..], \"layer\":name|id, \"selected\":true, \"visible\":true, \"within\":{\"min\":[x,y,z],\"max\":[..]}, \"intersects\":{..}, \"near\":{\"point\":[x,y,z],\"radius\":r}, \"name\":\"glob*\", \"pick\":\"largest\"|\"smallest\", \"limit\":N}.","inputSchema":{"type":"object","properties":{"filter":{"type":"object"}},"required":["filter"]}},
     {"name":"select","description":"Set the selection (most edit commands act on it). Empty ids clears it. additive=true adds to it.","inputSchema":{"type":"object","properties":{"ids":{"type":"array","items":{"type":"integer"}},"additive":{"type":"boolean"}},"required":["ids"]}},
-    {"name":"set_property","description":"Set one property by the same keys get_object returns (color [r,g,b] 0..1, visible, layer, position, scale, radius, start/end, points, closed, text, height, precision ...). World units. One undo step.","inputSchema":{"type":"object","properties":{"id":{"type":"integer"},"key":{"type":"string"},"value":{}},"required":["id","key","value"]}},
+    {"name":"set_property","description":"Set one property by the same keys get_object returns (color [r,g,b] 0..1, visible, layer, position, scale, radius, start/end, points, closed, text, height, precision, rotation [x,y,z,w], linetype name|id|bylayer, linetypeScale, metallic, opacity ...). World units. One undo step.","inputSchema":{"type":"object","properties":{"id":{"type":"integer"},"key":{"type":"string"},"value":{}},"required":["id","key","value"]}},
     {"name":"run_command","description":"Type one line into the AutoCAD-style command line, exactly as a user would, then Enter. Commands that wait for values take them in the next calls, e.g. \"circle\" -> \"0,0\" -> \"20\"; while waiting, text is a value, not a new command, and an empty text finishes the tool. cancel=true presses ESC (cancel the waiting command / tool). Examples: line, rec, circle, move, extrude, fillet, dli, undo, redo, zoom. The reply has the prompt the command is waiting on.","inputSchema":{"type":"object","properties":{"text":{"type":"string"},"cancel":{"type":"boolean","description":"press ESC instead of typing"}},"required":[]}},
-    {"name":"ai_actions","description":"Run structured CAD actions (same contract as the in-app AI command line): create_primitive (world units, position = base centre, solid sits on it in +Z: cube size [x,y,z]; wedge size [x,y,z]; sphere/torus radius (+minor_radius); cylinder/cone radius+height; pyramid radius+height+sides; tube radius+inner_radius+height), draw_sketch (line/circle/arc/polyline/rectangle/polygon/leader), edit_selected (select/move/copy/rotate/scale/color/delete/set/fillet/chamfer/join/offset/mirror/trim/extend/hatch with ids or filter), view_control, command. One undo step for the whole list. Returns what each action did.","inputSchema":{"type":"object","properties":{"actions":{"type":"array","items":{"type":"object","properties":{"type":{"type":"string","enum":["create_primitive","draw_sketch","edit_selected","view_control","file","create_room","analyze","create_floorplan","command","create_wall_graph","explode"]},"op":{"type":"string","enum":["move","copy","rotate","scale","color","delete","select","deselect","select_all","clear_all","set","pushpull","fillet","chamfer","remove_feature","meshfix","meshsmooth","meshdecimate","meshstitch","thicken","remesh","array3d","stretch","lengthen","break","union","intersect","subtract","hatch","shell","join","offset","mirror","trim","extend","interference","meshcheck","zoom_extents","zoom_to_last","top","front","right","iso","plan","ortho","perspective","grid_on","grid_off","light_on","light_off","light_toggle","style_shaded","style_shaded_edge","style_wireframe","style_wireframe_edge","style_hidden_line","open","save","import","plot","status","solve","auto","clear","amount","play","back","part","spin","balloons","bom","manual"]}},"required":["type"]}}},"required":["actions"]}},
+    {"name":"ai_actions","description":"Run structured CAD actions (same contract as the in-app AI command line): create_primitive (world units, position = base centre, solid sits on it in +Z: cube size [x,y,z]; wedge size [x,y,z]; sphere/torus radius (+minor_radius); cylinder/cone radius+height; pyramid radius+height+sides; tube radius+inner_radius+height), draw_sketch (line/circle/arc/ellipse/spline/polyline/rectangle/polygon/leader), edit_selected (select/move/copy/rotate/scale/color/delete/set/pushpull/fillet/chamfer/remove_feature/join/offset/mirror/trim/extend/hatch with ids or filter; pushpull: distance + face \"+x\"|\"-z\".. (the end face on that world side) or point [x,y,z] near the face), view_control, analyze, command. One undo step for the whole list. Returns what each action did.","inputSchema":{"type":"object","properties":{"actions":{"type":"array","items":{"type":"object","properties":{"type":{"type":"string","enum":["create_primitive","draw_sketch","edit_selected","view_control","file","create_room","analyze","create_floorplan","command","create_wall_graph","explode"]},"op":{"type":"string","enum":["move","copy","rotate","scale","color","delete","select","deselect","select_all","clear_all","set","pushpull","fillet","chamfer","remove_feature","meshfix","meshsmooth","meshdecimate","meshstitch","thicken","remesh","array3d","stretch","lengthen","break","union","intersect","subtract","hatch","shell","join","offset","mirror","trim","extend","interference","meshcheck","zoom_extents","zoom_to_last","top","front","right","iso","plan","ortho","perspective","grid_on","grid_off","light_on","light_off","light_toggle","style_shaded","style_shaded_edge","style_wireframe","style_wireframe_edge","style_hidden_line","open","save","import","plot","status","solve","auto","clear","amount","play","back","part","spin","balloons","bom","manual"]}},"required":["type"]}}},"required":["actions"]}},
+    {"name":"feature_dimensions","description":"Dimensions that built a solid (box width/length/height, cylinder diameter/height, extrude height + sketch circle diameters, rectangle width/length, each edge of other polygon profiles, and hole/boss locations = distance from the profile edges to a circle's centre). Without index/value: list them, plus the extrude's cuts (holes) and bosses. With index and value: change one and the solid is rebuilt (one undo step; a location change moves the hole). remove_cuts / remove_bosses (index lists): delete those holes/bosses in one undo step (indices from the cuts/bosses lists, before removal). A value the solid can't be rebuilt with (hole pushed off the plate) is refused with the reason.","inputSchema":{"type":"object","properties":{"id":{"type":"integer"},"index":{"type":"integer"},"value":{"type":"number"},"remove_cuts":{"type":"array","items":{"type":"integer"}},"remove_bosses":{"type":"array","items":{"type":"integer"}}},"required":["id"]}},
+    {"name":"wind_tunnel","description":"Wind tunnel (lattice Boltzmann on the GPU) around solids; wind blows along +X. ops: status (read first: active, steps, drag_coefficient, cells, field, plane, iso_triangles, pipe_openings); start (ids|id = solids, grid fast|normal|fine, wind 0.01..0.12 lattice units, pipe true = flow inside a pipe whose ends are flat ring faces, the end furthest -X is the inlet) - poll status while steps grow (drag settles after a few thousand steps); stop; reset; pause; play; view (field speed|pressure|vortex|smoke, plane x|y|z, at 0..1, smoke|surface|arrows true|false, iso true|false or 0..1 = the surface where the speed is that fraction of the wind, slow inside); wind (value - changes the inlet speed live). Check the picture with capture_view.","inputSchema":{"type":"object","properties":{"op":{"type":"string","enum":["status","start","stop","reset","pause","play","view","wind"]},"ids":{"type":"array","items":{"type":"integer"}},"id":{"type":"integer"},"grid":{"type":"string","enum":["fast","normal","fine"]},"wind":{"type":"number"},"value":{"type":"number"},"field":{"type":"string","enum":["speed","pressure","vortex","smoke"]},"plane":{"type":"string","enum":["x","y","z"]},"at":{"type":"number"},"smoke":{"type":"boolean"},"surface":{"type":"boolean"},"arrows":{"type":"boolean"},"iso":{},"pipe":{"type":"boolean"}},"required":["op"]}},
+    {"name":"structural_analysis","description":"Finite-element analysis of one closed solid (quadratic tetrahedra; mm, N, MPa). Flow: open {id} -> status lists faces (index, area, centroid, normal; split at 30 deg edges) -> fix {face} + loads -> run (solves at once in the web version) -> result. face = index, a point [x,y,z] near that face, or \"+x\"|\"-x\"|\"+y\"|\"-y\"|\"+z\"|\"-z\" (the end face on that side). ops: status, open, close, clear (conditions and result), run, set (type stress|heat|modal|buckling, material steel|aluminum|stainless|titanium|abs, size fast|normal|fine, units mm|m (scene unit), modes 1..30, show stress|disp|temp|flux|mode K, animate), fix|free {face}, force {face, force [fx,fy,fz] N over the face}, pressure {face, value MPa, + pushes in}, heat: temp {face, value C}, flux {face, value W in}, convect {face, h W/m2K, ambient C}. Result: stress = max_von_mises_mpa, max_displacement_mm, safety_factor (yield / max stress), reaction_n; heat = temperatures, face_heat; modal = frequencies_hz; buckling = load_factors (applied load x factor = buckling load).","inputSchema":{"type":"object","properties":{"op":{"type":"string","enum":["status","open","close","clear","run","set","fix","free","force","pressure","temp","flux","convect"]},"id":{"type":"integer"},"face":{},"force":{"type":"array","items":{"type":"number"}},"value":{"type":"number"},"h":{"type":"number"},"ambient":{"type":"number"},"type":{"type":"string"},"material":{"type":"string"},"size":{"type":"string"},"units":{"type":"string"},"modes":{"type":"integer"},"show":{"type":"string"},"animate":{"type":"boolean"}},"required":["op"]}},
     {"name":"capture_view","description":"Screenshot of the current viewport as an image, so you can check the result visually. clean=true hides the grid. max_size = longest side in px (default 1280).","inputSchema":{"type":"object","properties":{"clean":{"type":"boolean"},"max_size":{"type":"integer"}},"required":[]}},
 ]
 
@@ -324,8 +347,66 @@ def handle(msg):
     return {"jsonrpc": "2.0", "id": mid, "result": result}
 
 
+def relay_serve(port):
+    """자세 중계 - tag_tracker.py · 로봇이 네이티브 앱 (TCP) 에 보내듯 여기에 보내면 앱의 WebSocket 으로 넘긴다."""
+    srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    try:
+        srv.bind((HOST, port))
+    except OSError as e:
+        log(f"relay: cannot listen on {HOST}:{port}: {e}")
+        return
+    srv.listen(4)
+    log(f"relay: pose lines on tcp {HOST}:{port} -> LotCAD web")
+    while True:
+        c, _ = srv.accept()
+        threading.Thread(target=relay_client, args=(c,), daemon=True).start()
+
+
+def relay_client(c):
+    buf = b""
+    dropped = 0
+    try:
+        while True:
+            d = c.recv(65536)
+            if not d:
+                break
+            buf += d
+            while b"\n" in buf:
+                line, buf = buf.split(b"\n", 1)
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    msg = json.loads(line.decode("utf-8"))
+                except ValueError:
+                    continue
+                if not isinstance(msg, dict) or msg.get("type") not in RELAY_TYPES:
+                    continue
+                if not BROWSER.forward(line):
+                    dropped += 1
+                    if dropped == 1:
+                        log("relay: LotCAD web is not connected - dropping (type `link` in the app)")
+                else:
+                    dropped = 0
+    except OSError:
+        pass
+    try:
+        c.close()
+    except OSError:
+        pass
+
+
 def main():
+    relay = RELAY
+    if "--relay" in sys.argv:
+        i = sys.argv.index("--relay")
+        relay = int(sys.argv[i + 1]) if i + 1 < len(sys.argv) and sys.argv[i + 1].isdigit() else 7700
     threading.Thread(target=BROWSER.serve, daemon=True).start()
+    if relay:
+        threading.Thread(target=relay_serve, args=(relay,), daemon=True).start()
+        if sys.stdin.isatty():   # 터미널에서 중계만 - MCP 클라이언트가 없다
+            threading.Event().wait()
     for raw in sys.stdin:
         raw = raw.strip()
         if not raw:

@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<!--
+  데모 6축 로봇 팔 + 그리퍼 — 박스와 원기둥만 사용.
+  외부 메시 파일이 필요 없어서 엔진에 이미 있는 프리미티브로 그대로 그려진다.
+
+  단위는 미터, 좌표계는 Z-up (URDF 표준 = 이 엔진과 동일).
+  각 조인트의 <origin> 은 "부모 링크 원점에서 이 조인트까지" 이고,
+  <axis> 는 그 조인트가 도는 축이다.
+
+  구조:
+    base (원판)
+     └ 회전대(yaw, Z축)
+        └ 어깨(pitch, Y축)
+           └ 위팔
+              └ 팔꿈치(pitch)
+                 └ 아래팔
+                    └ 손목1(roll, X축)
+                       └ 손목2(pitch)
+                          └ 손목3(roll) = 손목 플랜지
+                             ├ 손가락 왼쪽 (prismatic — 벌리고 오므리기)
+                             └ 손가락 오른쪽 (prismatic)
+-->
+<robot name="demo_arm">
+
+  <!-- ── 받침대 ── -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.03"/>
+      <geometry><cylinder radius="0.18" length="0.06"/></geometry>
+      <material name="dark"><color rgba="0.25 0.27 0.30 1"/></material>
+    </visual>
+  </link>
+
+  <!-- ── 회전대 (yaw) ── -->
+  <link name="turntable">
+    <visual>
+      <origin xyz="0 0 0.05"/>
+      <geometry><cylinder radius="0.13" length="0.10"/></geometry>
+      <material name="orange"><color rgba="0.90 0.50 0.15 1"/></material>
+    </visual>
+  </link>
+  <joint name="joint_base" type="revolute">
+    <parent link="base_link"/>
+    <child  link="turntable"/>
+    <origin xyz="0 0 0.06"/>
+    <axis   xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159"/>
+  </joint>
+
+  <!-- ── 어깨 (pitch) — 관절 축을 보이게 원기둥을 눕혀 둔다 ── -->
+  <link name="shoulder">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.075" length="0.16"/></geometry>
+      <material name="steel"><color rgba="0.55 0.58 0.62 1"/></material>
+    </visual>
+  </link>
+  <joint name="joint_shoulder" type="revolute">
+    <parent link="turntable"/>
+    <child  link="shoulder"/>
+    <origin xyz="0 0 0.12"/>
+    <axis   xyz="0 1 0"/>
+    <limit lower="-1.9" upper="1.9"/>
+  </joint>
+
+  <!-- ── 위팔 ── -->
+  <link name="upper_arm">
+    <visual>
+      <origin xyz="0 0 0.17"/>
+      <geometry><box size="0.10 0.11 0.34"/></geometry>
+      <material name="orange2"><color rgba="0.90 0.50 0.15 1"/></material>
+    </visual>
+  </link>
+  <joint name="joint_upper" type="fixed">
+    <parent link="shoulder"/>
+    <child  link="upper_arm"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <!-- ── 팔꿈치 (pitch) ── -->
+  <link name="elbow">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.065" length="0.14"/></geometry>
+      <material name="steel2"><color rgba="0.55 0.58 0.62 1"/></material>
+    </visual>
+  </link>
+  <joint name="joint_elbow" type="revolute">
+    <parent link="upper_arm"/>
+    <child  link="elbow"/>
+    <origin xyz="0 0 0.34"/>
+    <axis   xyz="0 1 0"/>
+    <limit lower="-2.5" upper="2.5"/>
+  </joint>
+
+  <!-- ── 아래팔 ── -->
+  <link name="forearm">
+    <visual>
+      <origin xyz="0 0 0.14"/>
+      <geometry><box size="0.085 0.09 0.28"/></geometry>
+      <material name="orange3"><color rgba="0.90 0.50 0.15 1"/></material>
+    </visual>
+  </link>
+  <joint name="joint_forearm" type="fixed">
+    <parent link="elbow"/>
+    <child  link="forearm"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <!-- ── 손목 1 (roll, 팔 축 회전) ── -->
+  <link name="wrist_1">
+    <visual>
+      <origin xyz="0 0 0.035"/>
+      <geometry><cylinder radius="0.055" length="0.07"/></geometry>
+      <material name="steel3"><color rgba="0.55 0.58 0.62 1"/></material>
+    </visual>
+  </link>
+  <joint name="joint_wrist_roll" type="revolute">
+    <parent link="forearm"/>
+    <child  link="wrist_1"/>
+    <origin xyz="0 0 0.28"/>
+    <axis   xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159"/>
+  </joint>
+
+  <!-- ── 손목 2 (pitch) ── -->
+  <link name="wrist_2">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.05" length="0.10"/></geometry>
+      <material name="orange4"><color rgba="0.90 0.50 0.15 1"/></material>
+    </visual>
+  </link>
+  <joint name="joint_wrist_pitch" type="revolute">
+    <parent link="wrist_1"/>
+    <child  link="wrist_2"/>
+    <origin xyz="0 0 0.075"/>
+    <axis   xyz="0 1 0"/>
+    <limit lower="-2.0" upper="2.0"/>
+  </joint>
+
+  <!-- ── 손목 3 (roll) = 플랜지 ── -->
+  <link name="flange">
+    <visual>
+      <origin xyz="0 0 0.025"/>
+      <geometry><cylinder radius="0.045" length="0.05"/></geometry>
+      <material name="steel4"><color rgba="0.55 0.58 0.62 1"/></material>
+    </visual>
+  </link>
+  <joint name="joint_flange" type="revolute">
+    <parent link="wrist_2"/>
+    <child  link="flange"/>
+    <origin xyz="0 0 0.05"/>
+    <axis   xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159"/>
+  </joint>
+
+  <!-- ── 그리퍼 몸통 ── -->
+  <link name="gripper_base">
+    <visual>
+      <origin xyz="0 0 0.025"/>
+      <geometry><box size="0.10 0.05 0.05"/></geometry>
+      <material name="dark2"><color rgba="0.25 0.27 0.30 1"/></material>
+    </visual>
+  </link>
+  <joint name="joint_gripper" type="fixed">
+    <parent link="flange"/>
+    <child  link="gripper_base"/>
+    <origin xyz="0 0 0.05"/>
+  </joint>
+
+  <!-- ── 손가락 2개 (prismatic — 벌리고 오므리기) ── -->
+  <link name="finger_left">
+    <visual>
+      <origin xyz="0 0 0.045"/>
+      <geometry><box size="0.018 0.045 0.09"/></geometry>
+      <material name="gray"><color rgba="0.70 0.72 0.75 1"/></material>
+    </visual>
+  </link>
+  <joint name="joint_finger_left" type="prismatic">
+    <parent link="gripper_base"/>
+    <child  link="finger_left"/>
+    <origin xyz="-0.035 0 0.05"/>
+    <axis   xyz="-1 0 0"/>
+    <limit lower="0.0" upper="0.03"/>
+  </joint>
+
+  <link name="finger_right">
+    <visual>
+      <origin xyz="0 0 0.045"/>
+      <geometry><box size="0.018 0.045 0.09"/></geometry>
+      <material name="gray2"><color rgba="0.70 0.72 0.75 1"/></material>
+    </visual>
+  </link>
+  <joint name="joint_finger_right" type="prismatic">
+    <parent link="gripper_base"/>
+    <child  link="finger_right"/>
+    <origin xyz="0.035 0 0.05"/>
+    <axis   xyz="1 0 0"/>
+    <limit lower="0.0" upper="0.03"/>
+  </joint>
+
+</robot>

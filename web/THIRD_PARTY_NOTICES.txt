@@ -34,6 +34,13 @@ LotCAD 웹 판은 아래 오픈소스 소프트웨어를 포함합니다. 각 �
 * Emscripten runtime and emdawnwebgpu WebGPU bindings (generated JavaScript glue)
     Copyright (c) 2010-2014 Emscripten authors; Copyright 2019 The Emscripten Authors
     License: MIT (or University of Illinois/NCSA Open Source License)
+* Textures (textures/ — material colour maps, resized to 1024 px): Bricks104, Metal009 (ambientCG) · Oak Veneer 01 (Poly Haven)
+    · Tiles Stone 005 (3DTextures) · Fabric019, Fabric082A, Fabric069, Fabric084, Fabric055, Leather037, Concrete034, Marble012,
+      WoodFloor051, Wood051, Plastic010, Metal063, Asphalt033, Plaster001 (ambientCG, 1K color maps)
+    License: CC0 1.0 (public domain)
+* CesiumMilkTruck (models/CesiumMilkTruck.glb — 3D model used by the wind tunnel demo; from the Khronos glTF Sample Assets)
+    © 2017, Cesium. The Cesium logo on the truck is a trademark of Cesium.
+    License: Creative Commons Attribution 4.0 International (CC BY 4.0) — https://creativecommons.org/licenses/by/4.0/
 
 ========================================================================
 MIT License — applies to: ACadSharp, Emscripten, emdawnwebgpu
