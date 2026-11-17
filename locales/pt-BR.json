@@ -197,9 +197,9 @@
   "language.error": "Não foi possível carregar o idioma. Selecione-o novamente.",
   "plugins.title": "Plugins",
   "plugins.desktop": "Desktop",
-  "plugins.desktopLink": "Ver o cabeçalho da API de plugins",
+  "plugins.desktopLink": "Exemplos de plugins para desktop",
   "plugins.web": "Web (WebGPU)",
-  "plugins.webCode": "Código de exemplo para criar uma parede",
+  "plugins.webCode": "Exemplos de plugins web",
   "plugins.webOpen": "Abrir o aplicativo web",
   "plugins.webHelp": "Carregue o plugin na linha de comando do aplicativo web e depois crie uma parede."
 }

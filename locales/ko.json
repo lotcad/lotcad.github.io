@@ -197,9 +197,9 @@
   "language.error": "언어를 불러오지 못했습니다. 다시 선택해 주세요.",
   "plugins.title": "플러그인",
   "plugins.desktop": "데스크톱",
-  "plugins.desktopLink": "플러그인 API 헤더 보기",
+  "plugins.desktopLink": "데스크톱 플러그인 예제",
   "plugins.web": "웹 (WebGPU)",
-  "plugins.webCode": "벽 만들기 예제 코드",
+  "plugins.webCode": "웹 플러그인 예제 모음",
   "plugins.webOpen": "웹에서 사용",
   "plugins.webHelp": "웹 앱의 명령줄에서 플러그인을 불러온 뒤 벽을 만듭니다."
 }

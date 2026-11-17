@@ -197,9 +197,9 @@
   "language.error": "Could not load the language. Please try again.",
   "plugins.title": "Plugins",
   "plugins.desktop": "Desktop",
-  "plugins.desktopLink": "View the plugin API header",
+  "plugins.desktopLink": "Desktop plugin examples",
   "plugins.web": "Web (WebGPU)",
-  "plugins.webCode": "Wall plugin example code",
+  "plugins.webCode": "Web plugin examples",
   "plugins.webOpen": "Open the web app",
   "plugins.webHelp": "Load the plugin in the web app’s command line, then create a wall."
 }

@@ -197,9 +197,9 @@
   "language.error": "Impossible de charger la langue. Veuillez la sélectionner à nouveau.",
   "plugins.title": "Extensions",
   "plugins.desktop": "Bureau",
-  "plugins.desktopLink": "Voir l’en-tête de l’API des extensions",
+  "plugins.desktopLink": "Exemples d’extensions de bureau",
   "plugins.web": "Web (WebGPU)",
-  "plugins.webCode": "Code de l’exemple de création de mur",
+  "plugins.webCode": "Exemples d’extensions web",
   "plugins.webOpen": "Ouvrir l’application web",
   "plugins.webHelp": "Chargez l’extension dans la ligne de commande de l’application web, puis créez un mur."
 }

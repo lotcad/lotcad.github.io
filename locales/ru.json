@@ -197,9 +197,9 @@
   "language.error": "Не удалось загрузить язык. Выберите его ещё раз.",
   "plugins.title": "Плагины",
   "plugins.desktop": "Настольная версия",
-  "plugins.desktopLink": "Заголовочный файл API плагинов",
+  "plugins.desktopLink": "Примеры плагинов для настольной версии",
   "plugins.web": "Веб (WebGPU)",
-  "plugins.webCode": "Код примера создания стены",
+  "plugins.webCode": "Примеры веб-плагинов",
   "plugins.webOpen": "Открыть веб-приложение",
   "plugins.webHelp": "Загрузите плагин в командной строке веб-приложения, затем создайте стену."
 }

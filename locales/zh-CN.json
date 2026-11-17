@@ -197,9 +197,9 @@
   "language.error": "无法加载语言，请重新选择。",
   "plugins.title": "插件",
   "plugins.desktop": "桌面端",
-  "plugins.desktopLink": "查看插件 API 头文件",
+  "plugins.desktopLink": "桌面插件示例",
   "plugins.web": "网页端 (WebGPU)",
-  "plugins.webCode": "创建墙体的示例代码",
+  "plugins.webCode": "网页插件示例",
   "plugins.webOpen": "打开网页应用",
   "plugins.webHelp": "在网页应用的命令行中加载插件，然后创建墙体。"
 }

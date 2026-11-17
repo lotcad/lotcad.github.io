@@ -197,9 +197,9 @@
   "language.error": "No se pudo cargar el idioma. Vuelve a seleccionarlo.",
   "plugins.title": "Complementos",
   "plugins.desktop": "Escritorio",
-  "plugins.desktopLink": "Ver la cabecera de la API de complementos",
+  "plugins.desktopLink": "Ejemplos de complementos de escritorio",
   "plugins.web": "Web (WebGPU)",
-  "plugins.webCode": "Código de ejemplo para crear un muro",
+  "plugins.webCode": "Ejemplos de complementos web",
   "plugins.webOpen": "Abrir la aplicación web",
   "plugins.webHelp": "Carga el complemento en la línea de comandos de la aplicación web y luego crea un muro."
 }
