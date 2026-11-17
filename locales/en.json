@@ -194,5 +194,12 @@
   "video.llm.label": "Watch the local LLM 2D floor plan to 3D demo",
   "video.rigging.label": "Watch the rigging and joint animation demo",
   "video.joint": "LotCAD joint and robot animation demo",
-  "language.error": "Could not load the language. Please try again."
+  "language.error": "Could not load the language. Please try again.",
+  "plugins.title": "Plugins",
+  "plugins.desktop": "Desktop",
+  "plugins.desktopLink": "View the plugin API header",
+  "plugins.web": "Web (WebGPU)",
+  "plugins.webCode": "Wall plugin example code",
+  "plugins.webOpen": "Open the web app",
+  "plugins.webHelp": "Load the plugin in the web app’s command line, then create a wall."
 }

@@ -194,5 +194,12 @@
   "video.llm.label": "ローカルLLMによる2D平面図から3Dモデルへの変換動画を見る",
   "video.rigging.label": "リギング・関節アニメーション動画を見る",
   "video.joint": "LotCADの関節・ロボットアニメーションデモ",
-  "language.error": "言語を読み込めませんでした。もう一度選択してください。"
+  "language.error": "言語を読み込めませんでした。もう一度選択してください。",
+  "plugins.title": "プラグイン",
+  "plugins.desktop": "デスクトップ",
+  "plugins.desktopLink": "プラグイン API ヘッダーを見る",
+  "plugins.web": "Web (WebGPU)",
+  "plugins.webCode": "壁を作成するサンプルコード",
+  "plugins.webOpen": "Web アプリを開く",
+  "plugins.webHelp": "Web アプリのコマンドラインでプラグインを読み込み、壁を作成します。"
 }

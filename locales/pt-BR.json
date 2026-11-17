@@ -194,5 +194,12 @@
   "video.llm.label": "Ver demonstração de planta 2D para modelo 3D com LLM local",
   "video.rigging.label": "Ver demonstração de rigging e animação de articulações",
   "video.joint": "Demonstração LotCAD de animação de articulações e robôs",
-  "language.error": "Não foi possível carregar o idioma. Selecione-o novamente."
+  "language.error": "Não foi possível carregar o idioma. Selecione-o novamente.",
+  "plugins.title": "Plugins",
+  "plugins.desktop": "Desktop",
+  "plugins.desktopLink": "Ver o cabeçalho da API de plugins",
+  "plugins.web": "Web (WebGPU)",
+  "plugins.webCode": "Código de exemplo para criar uma parede",
+  "plugins.webOpen": "Abrir o aplicativo web",
+  "plugins.webHelp": "Carregue o plugin na linha de comando do aplicativo web e depois crie uma parede."
 }

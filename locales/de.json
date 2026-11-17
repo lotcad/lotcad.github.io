@@ -194,5 +194,12 @@
   "video.llm.label": "Demo vom 2D-Grundriss zum 3D-Modell mit lokalem LLM ansehen",
   "video.rigging.label": "Rigging- und Gelenkanimationsdemo ansehen",
   "video.joint": "LotCAD-Demo für Gelenk- und Roboteranimation",
-  "language.error": "Die Sprache konnte nicht geladen werden. Bitte erneut auswählen."
+  "language.error": "Die Sprache konnte nicht geladen werden. Bitte erneut auswählen.",
+  "plugins.title": "Plugins",
+  "plugins.desktop": "Desktop",
+  "plugins.desktopLink": "Header der Plugin-API ansehen",
+  "plugins.web": "Web (WebGPU)",
+  "plugins.webCode": "Beispielcode für das Wand-Plugin",
+  "plugins.webOpen": "Web-App öffnen",
+  "plugins.webHelp": "Laden Sie das Plugin in der Befehlszeile der Web-App und erstellen Sie dann eine Wand."
 }

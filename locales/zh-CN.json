@@ -194,5 +194,12 @@
   "video.llm.label": "观看本地LLM将2D平面图转换为3D模型的演示",
   "video.rigging.label": "观看绑定与关节动画演示",
   "video.joint": "LotCAD关节与机器人动画演示",
-  "language.error": "无法加载语言，请重新选择。"
+  "language.error": "无法加载语言，请重新选择。",
+  "plugins.title": "插件",
+  "plugins.desktop": "桌面端",
+  "plugins.desktopLink": "查看插件 API 头文件",
+  "plugins.web": "网页端 (WebGPU)",
+  "plugins.webCode": "创建墙体的示例代码",
+  "plugins.webOpen": "打开网页应用",
+  "plugins.webHelp": "在网页应用的命令行中加载插件，然后创建墙体。"
 }

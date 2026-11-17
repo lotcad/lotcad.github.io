@@ -194,5 +194,12 @@
   "video.llm.label": "Voir la démo LLM local du plan 2D au modèle 3D",
   "video.rigging.label": "Voir la démo de rigging et d’animation des articulations",
   "video.joint": "Démo LotCAD d’animation des articulations et des robots",
-  "language.error": "Impossible de charger la langue. Veuillez la sélectionner à nouveau."
+  "language.error": "Impossible de charger la langue. Veuillez la sélectionner à nouveau.",
+  "plugins.title": "Extensions",
+  "plugins.desktop": "Bureau",
+  "plugins.desktopLink": "Voir l’en-tête de l’API des extensions",
+  "plugins.web": "Web (WebGPU)",
+  "plugins.webCode": "Code de l’exemple de création de mur",
+  "plugins.webOpen": "Ouvrir l’application web",
+  "plugins.webHelp": "Chargez l’extension dans la ligne de commande de l’application web, puis créez un mur."
 }
