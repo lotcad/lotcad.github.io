@@ -1,5 +1,16 @@
 {
 	"dimRefs": [],
+	"drawOrder": [
+		0,
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8
+	],
 	"featureLinks": [],
 	"format": "lot",
 	"genFeatures": [],
@@ -909771,5 +909782,14 @@
 		}
 	],
 	"sketchConstraints": [],
+	"textStyles": [
+		{
+			"font": "",
+			"height": 0.0,
+			"name": "Standard",
+			"oblique": 0.0,
+			"widthFactor": 1.0
+		}
+	],
 	"version": 6
 }
