@@ -31,6 +31,12 @@ LotCAD 웹 판은 아래 오픈소스 소프트웨어를 포함합니다. 각 �
 * ACadSharp (DWG reading — algorithms ported to C++ in the DWG module, e.g. the R2004 LZ77 decompressor)
     Copyright (c) 2021 Albert Domenech
     License: MIT
+* ufbx (FBX reading)
+    Copyright (c) 2020 Samuli Raivio
+    License: MIT (or Public Domain / Unlicense)
+* miniz (gzip — .nii.gz volumes)
+    Copyright 2013-2014 RAD Game Tools and Valve Software; Copyright 2010-2014 Rich Geldreich and Tenacious Software LLC
+    License: MIT
 * Emscripten runtime and emdawnwebgpu WebGPU bindings (generated JavaScript glue)
     Copyright (c) 2010-2014 Emscripten authors; Copyright 2019 The Emscripten Authors
     License: MIT (or University of Illinois/NCSA Open Source License)
@@ -43,9 +49,12 @@ LotCAD 웹 판은 아래 오픈소스 소프트웨어를 포함합니다. 각 �
     License: Creative Commons Attribution 4.0 International (CC BY 4.0) — https://creativecommons.org/licenses/by/4.0/
 
 ========================================================================
-MIT License — applies to: ACadSharp, Emscripten, emdawnwebgpu
+MIT License — applies to: ACadSharp, ufbx, miniz, Emscripten, emdawnwebgpu
 ========================================================================
 Copyright (c) 2021 Albert Domenech
+Copyright (c) 2020 Samuli Raivio
+Copyright 2013-2014 RAD Game Tools and Valve Software
+Copyright 2010-2014 Rich Geldreich and Tenacious Software LLC
 Copyright (c) 2010-2014 Emscripten authors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
