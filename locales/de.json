@@ -201,5 +201,12 @@
   "plugins.web": "Web (WebGPU)",
   "plugins.webCode": "Web-Plugin-Beispiele",
   "plugins.webOpen": "Web-App öffnen",
-  "plugins.webHelp": "Laden Sie das Plugin in der Befehlszeile der Web-App und erstellen Sie dann eine Wand."
+  "plugins.webHelp": "Laden Sie das Plugin in der Befehlszeile der Web-App und erstellen Sie dann eine Wand.",
+  "sdk.gui.title": "GUI-Beispiele mit dem SDK",
+  "sdk.gui.intro": "Echte Anwendungen, die die LotCAD-Engine in verschiedene GUI-Frameworks einbetten. Klicken Sie auf ein Bild, um das Original in voller Größe zu sehen.",
+  "sdk.gui.code": "Beispielcode ansehen →",
+  "sdk.gui.winforms.description": "Ein WinForms-Host mit CAD-Ansicht und Bereichen für Layer und Linientypen.",
+  "sdk.gui.wpf.description": "Ein WPF-Host mit 3D-Ansicht, Knoteneditor und Steuerung der Explosionsdarstellung.",
+  "sdk.gui.mfc.description": "Ein 3D-Bauteil in einem MFC-CAD-Host mit Menüband und Befehlseingabe.",
+  "sdk.gui.qt6.description": "Ein 3D-Bauteil in einem Qt-6-Host mit Menüs und Ansichtssteuerung."
 }

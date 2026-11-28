@@ -201,5 +201,12 @@
   "plugins.web": "Web (WebGPU)",
   "plugins.webCode": "Ejemplos de complementos web",
   "plugins.webOpen": "Abrir la aplicación web",
-  "plugins.webHelp": "Carga el complemento en la línea de comandos de la aplicación web y luego crea un muro."
+  "plugins.webHelp": "Carga el complemento en la línea de comandos de la aplicación web y luego crea un muro.",
+  "sdk.gui.title": "Ejemplos de GUI con el SDK",
+  "sdk.gui.intro": "Aplicaciones reales que integran el motor LotCAD en distintos frameworks de interfaz. Haz clic en una imagen para ver el original a tamaño completo.",
+  "sdk.gui.code": "Ver código de ejemplo →",
+  "sdk.gui.winforms.description": "Un host WinForms con una vista CAD y paneles de capas y tipos de línea.",
+  "sdk.gui.wpf.description": "Un host WPF con una vista 3D, un editor de nodos y controles de vista explosionada.",
+  "sdk.gui.mfc.description": "Una pieza 3D en un host CAD MFC con cinta y entrada de comandos.",
+  "sdk.gui.qt6.description": "Una pieza 3D en un host Qt 6 con menús y controles de vista."
 }

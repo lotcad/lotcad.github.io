@@ -201,5 +201,12 @@
   "plugins.web": "网页端 (WebGPU)",
   "plugins.webCode": "网页插件示例",
   "plugins.webOpen": "打开网页应用",
-  "plugins.webHelp": "在网页应用的命令行中加载插件，然后创建墙体。"
+  "plugins.webHelp": "在网页应用的命令行中加载插件，然后创建墙体。",
+  "sdk.gui.title": "SDK GUI 开发示例",
+  "sdk.gui.intro": "将 LotCAD 引擎嵌入不同 GUI 框架的实际运行画面。点击图片可查看原始尺寸。",
+  "sdk.gui.code": "查看示例代码 →",
+  "sdk.gui.winforms.description": "WinForms 宿主示例，包含 CAD 视口以及图层和线型设置面板。",
+  "sdk.gui.wpf.description": "WPF 宿主示例，包含三维视口、节点编辑区域和爆炸图控制面板。",
+  "sdk.gui.mfc.description": "在带有功能区和命令输入框的 MFC CAD 宿主中显示三维零件。",
+  "sdk.gui.qt6.description": "在带有菜单和视图控制面板的 Qt 6 宿主中显示三维零件。"
 }

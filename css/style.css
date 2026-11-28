@@ -196,3 +196,7 @@ header { gap: 20px; flex-wrap: wrap; }
 html { word-break: normal; overflow-wrap: break-word; }
 html:lang(ko) p { word-break: keep-all; }
 
+
+#sdk-gui-examples { margin-top: 40px; scroll-margin-top: 24px; }
+.sdk-gui-grid h4 { margin: 0 0 12px; font-size: 20px; }
+.sdk-gui-grid figcaption .text-link { display: inline-block; margin-top: 14px; }

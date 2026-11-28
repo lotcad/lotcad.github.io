@@ -201,5 +201,12 @@
   "plugins.web": "Web (WebGPU)",
   "plugins.webCode": "Web plugin examples",
   "plugins.webOpen": "Open the web app",
-  "plugins.webHelp": "Load the plugin in the web app’s command line, then create a wall."
+  "plugins.webHelp": "Load the plugin in the web app’s command line, then create a wall.",
+  "sdk.gui.title": "SDK GUI examples",
+  "sdk.gui.intro": "Actual applications embedding the LotCAD engine in different GUI frameworks. Click an image to view the original at full size.",
+  "sdk.gui.code": "View sample code →",
+  "sdk.gui.winforms.description": "A WinForms host with a CAD viewport and panels for layers and line types.",
+  "sdk.gui.wpf.description": "A WPF host with a 3D viewport, a node editing area and exploded-view controls.",
+  "sdk.gui.mfc.description": "A 3D part displayed in an MFC CAD host with a ribbon and command input.",
+  "sdk.gui.qt6.description": "A 3D part displayed in a Qt 6 host with menus and view controls."
 }
