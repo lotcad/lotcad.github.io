@@ -208,5 +208,6 @@
   "sdk.gui.winforms.description": "WinForms 창에 CAD 뷰포트와 도면층·선종류 설정 패널을 연결한 예시입니다.",
   "sdk.gui.wpf.description": "WPF 창에 3D 뷰포트, 노드 편집 영역과 분해도 제어 패널을 구성한 예시입니다.",
   "sdk.gui.mfc.description": "MFC 리본 메뉴와 명령 입력창을 갖춘 CAD 호스트에서 3D 부품을 표시한 예시입니다.",
-  "sdk.gui.qt6.description": "Qt 6 호스트의 메뉴·뷰 제어 패널과 함께 3D 부품을 표시한 예시입니다."
+  "sdk.gui.qt6.description": "Qt 6 호스트의 메뉴·뷰 제어 패널과 함께 3D 부품을 표시한 예시입니다.",
+  "sdk.gui.python.description": "Python·PySide6 창에 리본 메뉴, 명령 입력창과 3D 뷰포트를 구성해 CAD 부품을 표시한 예시입니다."
 }

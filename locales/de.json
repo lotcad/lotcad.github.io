@@ -208,5 +208,6 @@
   "sdk.gui.winforms.description": "Ein WinForms-Host mit CAD-Ansicht und Bereichen für Layer und Linientypen.",
   "sdk.gui.wpf.description": "Ein WPF-Host mit 3D-Ansicht, Knoteneditor und Steuerung der Explosionsdarstellung.",
   "sdk.gui.mfc.description": "Ein 3D-Bauteil in einem MFC-CAD-Host mit Menüband und Befehlseingabe.",
-  "sdk.gui.qt6.description": "Ein 3D-Bauteil in einem Qt-6-Host mit Menüs und Ansichtssteuerung."
+  "sdk.gui.qt6.description": "Ein 3D-Bauteil in einem Qt-6-Host mit Menüs und Ansichtssteuerung.",
+  "sdk.gui.python.description": "Ein CAD-Bauteil in einem Python/PySide6-Host mit Menüband, Befehlseingabe und 3D-Ansicht."
 }

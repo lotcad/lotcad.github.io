@@ -208,5 +208,6 @@
   "sdk.gui.winforms.description": "Un hôte WinForms avec une vue CAO et des panneaux de calques et de types de lignes.",
   "sdk.gui.wpf.description": "Un hôte WPF avec une vue 3D, un éditeur de nœuds et des commandes de vue éclatée.",
   "sdk.gui.mfc.description": "Une pièce 3D dans un hôte CAO MFC avec un ruban et une saisie de commandes.",
-  "sdk.gui.qt6.description": "Une pièce 3D dans un hôte Qt 6 avec des menus et des commandes de vue."
+  "sdk.gui.qt6.description": "Une pièce 3D dans un hôte Qt 6 avec des menus et des commandes de vue.",
+  "sdk.gui.python.description": "Une pièce CAO dans un hôte Python/PySide6 avec un ruban, une saisie de commandes et une vue 3D."
 }

@@ -208,5 +208,6 @@
   "sdk.gui.winforms.description": "WinForms 宿主示例，包含 CAD 视口以及图层和线型设置面板。",
   "sdk.gui.wpf.description": "WPF 宿主示例，包含三维视口、节点编辑区域和爆炸图控制面板。",
   "sdk.gui.mfc.description": "在带有功能区和命令输入框的 MFC CAD 宿主中显示三维零件。",
-  "sdk.gui.qt6.description": "在带有菜单和视图控制面板的 Qt 6 宿主中显示三维零件。"
+  "sdk.gui.qt6.description": "在带有菜单和视图控制面板的 Qt 6 宿主中显示三维零件。",
+  "sdk.gui.python.description": "在带有功能区、命令输入框和三维视口的 Python/PySide6 宿主中显示 CAD 零件。"
 }

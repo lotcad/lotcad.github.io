@@ -208,5 +208,6 @@
   "sdk.gui.winforms.description": "CADビューポートと画層・線種設定パネルを備えたWinFormsホストの例です。",
   "sdk.gui.wpf.description": "3Dビューポート、ノード編集領域、分解図の操作パネルを備えたWPFホストの例です。",
   "sdk.gui.mfc.description": "リボンとコマンド入力欄を備えたMFCのCADホストで3D部品を表示した例です。",
-  "sdk.gui.qt6.description": "メニューとビュー操作パネルを備えたQt 6ホストで3D部品を表示した例です。"
+  "sdk.gui.qt6.description": "メニューとビュー操作パネルを備えたQt 6ホストで3D部品を表示した例です。",
+  "sdk.gui.python.description": "リボン、コマンド入力欄、3Dビューポートを備えたPython・PySide6ホストでCAD部品を表示した例です。"
 }

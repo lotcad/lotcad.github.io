@@ -208,5 +208,6 @@
   "sdk.gui.winforms.description": "Хост WinForms с окном CAD и панелями слоёв и типов линий.",
   "sdk.gui.wpf.description": "Хост WPF с 3D-видом, редактором узлов и управлением разнесённым видом.",
   "sdk.gui.mfc.description": "3D-деталь в CAD-хосте MFC с лентой и строкой ввода команд.",
-  "sdk.gui.qt6.description": "3D-деталь в хосте Qt 6 с меню и управлением видом."
+  "sdk.gui.qt6.description": "3D-деталь в хосте Qt 6 с меню и управлением видом.",
+  "sdk.gui.python.description": "CAD-деталь в хосте Python/PySide6 с лентой, строкой ввода команд и 3D-видом."
 }

@@ -208,5 +208,6 @@
   "sdk.gui.winforms.description": "Un host WinForms con una vista CAD y paneles de capas y tipos de línea.",
   "sdk.gui.wpf.description": "Un host WPF con una vista 3D, un editor de nodos y controles de vista explosionada.",
   "sdk.gui.mfc.description": "Una pieza 3D en un host CAD MFC con cinta y entrada de comandos.",
-  "sdk.gui.qt6.description": "Una pieza 3D en un host Qt 6 con menús y controles de vista."
+  "sdk.gui.qt6.description": "Una pieza 3D en un host Qt 6 con menús y controles de vista.",
+  "sdk.gui.python.description": "Una pieza CAD en un host Python/PySide6 con cinta, entrada de comandos y vista 3D."
 }
